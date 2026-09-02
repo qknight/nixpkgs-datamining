@@ -1,0 +1,10 @@
+cfg-if def85bc9d3aaec5f
+diceware 09a34379974b245d
+getopts a191887a84a85119
+getrandom 6b5177b26d5208aa
+libc c093f2977826c638
+ppv-lite86 0569c2513d0d0147
+rand b3dd7c59c353cb91
+rand_chacha 3845786d4f2aa9d0
+rand_core 36f8d8adb082549c
+unicode-width 2c7f3bfd16db6553

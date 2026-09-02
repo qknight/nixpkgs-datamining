@@ -1,0 +1,1 @@
+nix-build /home/nixos/nixpkgs -A zola  --check

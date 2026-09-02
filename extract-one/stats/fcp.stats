@@ -1,0 +1,13 @@
+autocfg 8f05965f36960fd3
+bitflags b749e3da9378cb70
+cfg-if def85bc9d3aaec5f
+crossbeam-deque e902a0cc151ede51
+crossbeam-epoch 84d1c01dea878ef2
+crossbeam-utils 2acc660635eaa50a
+either 88cc6451475e3cae
+fcp abd43ff6ad10fefd
+libc 6294cd6f672e1af7
+memoffset 2a4b76cc6e6ecd69
+nix feb110efcc9c842d
+rayon 1f0b562849b57825
+rayon-core 229116e102aa62b8

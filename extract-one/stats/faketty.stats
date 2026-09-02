@@ -1,0 +1,17 @@
+anstream 9ce11ad1399faeb9
+anstyle 7b0f253f1be8d4f6
+anstyle-parse 83504710683559fe
+anstyle-query 2be227f3a17ed943
+bitflags 5088700da98349bc
+cfg-if def85bc9d3aaec5f
+cfg_aliases 698d6e909ed4cddd
+clap 0ad8dd527eba70e0
+clap_builder c6e3392dd553aa68
+clap_lex 35e0e3cd33dd8d53
+colorchoice 0bdfdc56f34e15d9
+faketty 57c7c76cc5445fc9
+is_terminal_polyfill 5ed197223b44c598
+libc 008a2fd3aa67d0d3
+nix 0b6096a043352919
+strsim 813ab1d23dc18918
+utf8parse 75a50f5b6fb84766

@@ -1,0 +1,15 @@
+binfarce 407463acc88a4077
+cargo-bloat e05cd886ee4ab6b2
+fallible-iterator 4caace82ea91bc5a
+json bad6e7051e94411a
+libc 20acf0e666d17d51
+memmap2 a8b089f1aab1c766
+multimap db01611b78870bba
+pdb b718867c7ac55af9
+pico-args d59c6de82a5f7c5e
+regex c4095364b1f56a05
+regex-automata 71989f805f0fbe0d
+regex-syntax a085d5e2a0e9d8be
+scroll 63f027422827cf5d
+term_size a8a749688d40b4e0
+uuid d524bc5c702b37af

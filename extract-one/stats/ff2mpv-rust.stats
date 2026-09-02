@@ -1,0 +1,14 @@
+equivalent 60fda124e6a4dd0a
+ff2mpv-rust 489a6b764be45790
+hashbrown d0f1ea8f34a3ecf6
+indexmap 602405ce358e62b3
+itoa d57700d878a488da
+memchr 45c88a498874e941
+proc-macro2 1bd1043926e044b9
+quote 3c5c0f56757cd4c2
+ryu af79f542e0648730
+serde 345777d14a79cfc8
+serde_derive 6ef71569047159ae
+serde_json 209f8e3531496ed7
+syn def1567c6b37ba71
+unicode-ident 90985a48120e6319

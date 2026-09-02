@@ -1,0 +1,10 @@
+proc-macro2 86238a63ef6f682d
+quote d2c7562a743c2311
+serde 006c9d268152e20b
+shell-escape 08bc143f8206915b
+syn 1ac963f98917cdba
+thiserror a111afe16e60a1be
+thiserror-impl 9d4754ee067a1d20
+tombl 05e9bb9db4e377a5
+toml e1d9726cb616ad42
+unicode-ident bf3887ce904a0ffe

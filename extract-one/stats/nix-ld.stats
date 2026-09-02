@@ -1,0 +1,14 @@
+byteorder 1c3e3f51038a7eb8
+cc 6ca45cb8a6b6ace5
+embedded-io 0b7cda3154f35a15
+find-msvc-tools 5fcccab53d7dc005
+goblin c63739749f1b85ea
+hash32 d0cee7f34fdcf384
+heapless 7d0e9f23bb3b1396
+linux-raw-sys 9e30ddd5bb1a88cf
+log add2f291cbe1fc5e
+nix-ld 574fb6e89a51300b
+plain 1bab2ce5e8c93b50
+scroll ebfaebe2de699028
+shlex 789a38d403f1b371
+stable_deref_trait ffb2f8010f5fd7e0

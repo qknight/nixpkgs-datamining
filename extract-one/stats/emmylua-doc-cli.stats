@@ -1,0 +1,17 @@
+allocator-api2 2e54011df1160585
+equivalent 60fda124e6a4dd0a
+foldhash 7875817782ac5099
+hashbrown 93adb6b865e2a8ba
+indexmap 42d7d6cdbbcd4d2c
+proc-macro2 5ef1e3bfc76ec0d2
+quote d43e4bb17a6e73bb
+serde 1e882763363c5649
+serde_core 93082822dabbe247
+serde_derive 012eee8cf235f2ba
+serde_spanned b87577556ef98bd8
+syn e02951a5a1f05676
+toml_datetime d25ada7efaccbf41
+toml_edit 588935babe6be100
+toml_write 324d30987c01469e
+unicode-ident 90985a48120e6319
+winnow 5cb9f14ac0e7be17

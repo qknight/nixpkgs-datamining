@@ -1,0 +1,9 @@
+anyhow b42091b663d4fd58
+cargo-cranky d2cf1e0ef025cf81
+proc-macro2 cbf39c5049ba0d2b
+quote 906e81d60a99a515
+serde 09b2fee01f35706c
+serde_derive c806e1de51c969e2
+syn c62ac27998d329ec
+toml e1d9726cb616ad42
+unicode-ident 9cb64fabe01718d5

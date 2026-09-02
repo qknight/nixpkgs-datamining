@@ -1,0 +1,15 @@
+autocfg 3d5abcf1e71c5ab1
+cfg-if def85bc9d3aaec5f
+crossbeam-channel 86f4d929f785b68b
+crossbeam-deque c60e49c329290d7a
+crossbeam-epoch 9f8fc90960737bcb
+crossbeam-utils 5a536dfa637bc0d5
+either 9b3a51ceb4285a73
+libc 3cf17e1091c6935b
+memoffset 2a4b76cc6e6ecd69
+num_cpus 54134c19a1d5789f
+once_cell 9a57c5309d019ccf
+rayon 1eece35594769629
+rayon-core 06cb6873055e39d2
+scopeguard c78679daede4179f
+swapview 813ac047d1de0711

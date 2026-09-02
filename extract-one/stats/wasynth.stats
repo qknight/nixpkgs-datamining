@@ -1,0 +1,6 @@
+autocfg 0d7d61f6213c044a
+codegen-luajit 01fb7f020e1bde4c
+hashbrown ac58fb40890dcb67
+indexmap 0c524bbfe1f19bdf
+semver 2ca9757152c61913
+wasmparser 29c54670a5ab53eb

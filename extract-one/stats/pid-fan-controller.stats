@@ -1,0 +1,12 @@
+anyhow 0eba4694137c7a0e
+glob 55e9303c936b5738
+itoa 2c6939f82f20affc
+pid-fan-controller c55fb9653bb3a5a4
+proc-macro2 8fc8c046d2d200b6
+quote ac53b4c63a09f273
+ryu bec138b60866d6d3
+serde ea039bc07131c033
+serde_derive 0e32040abb9d41f0
+serde_json c07fb05dec6b532c
+syn fe5026be41250cf7
+unicode-ident 2401bf678ea2bdeb

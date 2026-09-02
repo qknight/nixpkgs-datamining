@@ -1,0 +1,15 @@
+autocfg 3d5abcf1e71c5ab1
+enum-ordinalize 5d40c64b9e129232
+ioctl-rs bef638cdf65bd7d4
+libc 700786905a2a1d82
+num-bigint ae60acb9120feb03
+num-integer b40ef7c2a2f21ab6
+num-traits 3c716a2596f50233
+proc-macro2 abbccbf6757a9521
+quote 460fd54ed7464c32
+serial 524727286f752ce2
+serial-core 086afdc57f02d9f6
+serial-unix 9e312452c57d81e7
+syn 36c1fb46f8514c5c
+termios 5f9c4d793367e23a
+unicode-ident 2401bf678ea2bdeb

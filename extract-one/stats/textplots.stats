@@ -1,0 +1,11 @@
+bitflags d58313994c376fc5
+bytemuck 9eaa112e6b63ac15
+colored 5949eabcb6b23c67
+drawille ff968dab76f61571
+fnv 433d39d152af2c0b
+is-terminal 5cc5510e87601f46
+lazy_static 271f7f4fc546178a
+linux-raw-sys e3369a33a37f847f
+rgb 3977e4b998c57d3b
+rustix 81dcf6b5e2dc1850
+textplots 5d75334162e86f8e

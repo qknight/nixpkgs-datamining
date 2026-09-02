@@ -1,0 +1,13 @@
+anstream 7b440480faeca230
+anstyle fcab95f1a1452eda
+anstyle-parse baf48fa45bc5e699
+anstyle-query 3504aee7bdded34e
+clap 3215d4079b00356f
+clap_builder 989f686d8e2f9b40
+clap_lex f2d9d7a30781c3ee
+colorchoice addec59f4e69b9e0
+hledger-fmt 42807fb970ee18d9
+is_terminal_polyfill 589d0bac2232539c
+memchr 81e4e9fdf9aca3b7
+similar b37a011323ba4489
+utf8parse 75a50f5b6fb84766

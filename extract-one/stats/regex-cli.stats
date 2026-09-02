@@ -1,0 +1,16 @@
+aho-corasick 6ee6bdb65df2e0e6
+anyhow ab3edfafd6b46618
+bstr dd0a19ab7ffc384c
+lexopt bfc6702e0bf261f4
+libc d18103d1ba161a1e
+log b740711446f43018
+memchr 7abec920bacce0c9
+memmap2 f06ac0ccc4b0e6fc
+regex 35cf90e8f25da898
+regex-automata d1b327d205c79045
+regex-cli 7b2a85b47bd7749b
+regex-lite c146bf584de1f153
+regex-syntax 5f49a9e60e33959b
+tabwriter 56307ab470255e75
+textwrap 639c6f831461dc6c
+unicode-width e02f280b20409d1e

@@ -1,0 +1,15 @@
+equivalent f9782f50a188cc7d
+hashbrown b80100f55062812e
+indexmap e247ef75806bfe99
+prettyplease a615d0844cb5c867
+proc-macro2 a9d6bcd00105b13c
+quote 73ae6474145fbc4f
+serde e5566c30dfe16857
+serde_spanned a76f78c7f52a077b
+specr-transpile 051fb1f2b4d88846
+syn ba6c41c42e44dc40
+toml d6ffe0c31ab97a2f
+toml_datetime 475cc1b5ab480962
+toml_edit 10ba51369bf67a77
+unicode-ident d6d82c89678528ed
+winnow 417b2805134c3339

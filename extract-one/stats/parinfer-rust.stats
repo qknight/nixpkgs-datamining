@@ -1,0 +1,14 @@
+getopts a191887a84a85119
+itoa 76621917139f60fd
+libc 41141463bd1e3643
+parinfer_rust aeea83be2af72b3f
+proc-macro2 65232f28d0e1d110
+quote 2e7db0a14de12c0e
+ryu 53191e2366fa5099
+serde 32f25929ea80cd76
+serde_derive ed7549d5d6514184
+serde_json 9e79f20a07e50e3a
+syn 91889a2182350c47
+unicode-segmentation 7fef26b6db29bab1
+unicode-width 98ced60c9d2f3f5f
+unicode-xid 411420f5abf2ea5c

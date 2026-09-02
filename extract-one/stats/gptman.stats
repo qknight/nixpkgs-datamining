@@ -1,0 +1,16 @@
+bincode ac096ef48fe0380c
+bitflags b749e3da9378cb70
+cfg-if def85bc9d3aaec5f
+crc e607397bf9230ec0
+crc-catalog fda154d134dc5538
+gptman e7b4b072a07dcae2
+libc e17fbc9805737bb6
+nix cb1d28c8ddb8a103
+proc-macro2 0cb372a8fd29f796
+quote 29f31dd5c1ed110a
+serde fc4dcc02554c3f01
+serde_derive eb4da533e08e45dd
+syn 5f31e6d6f387a426
+thiserror 4fc489f13abb0841
+thiserror-impl 7fb14bfecaaeb6c9
+unicode-ident 2401bf678ea2bdeb

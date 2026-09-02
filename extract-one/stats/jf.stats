@@ -1,0 +1,10 @@
+autocfg 3d5abcf1e71c5ab1
+hashbrown ac58fb40890dcb67
+indexmap 71d6db701f5f31eb
+itoa 6a15b5cfe7b605ba
+jf 90e027ffb993c39e
+ryu c86420d24e94ff9a
+serde c900ebd826b6d7e1
+serde_json 35fb9566e2a0ee14
+serde_yaml ae9fdcece3aa252f
+unsafe-libyaml 0330bc1be24da572

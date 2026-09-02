@@ -1,0 +1,15 @@
+autocfg 0d7d61f6213c044a
+cfg-if 06c1100e19c6ed08
+erg 98df4994a36b54ab
+libc 783183689aea9833
+lock_api bd8a1cfeba57db51
+parking_lot f01a6477d7ee3a9b
+parking_lot_core 854a8e64135b76a6
+proc-macro2 8f33b82c61a4eecc
+quote d43e4bb17a6e73bb
+scopeguard 89a56932c6dc6a07
+smallvec 37da05910a5147b3
+syn a98789565a27279e
+thread_local 13b9b93d7ee79299
+unicode-ident 90985a48120e6319
+unicode-xid 54d31d0cb72e59ae

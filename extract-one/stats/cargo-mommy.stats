@@ -1,0 +1,17 @@
+aho-corasick 45521a0939414791
+cargo-mommy 5f02694c1468f112
+fastrand e4af7c1a64ba19c6
+itoa 25f13b3c8f8ad0e7
+memchr c2e52ec829c99773
+proc-macro2 3c3df45128026965
+quote 460fd54ed7464c32
+regex 386c38b9c9365e1a
+regex-automata b887aa8445e5851e
+regex-syntax 47a00d75ec5e634d
+ryu 30b335dc50389d59
+serde 247f80d305e0406e
+serde-tuple-vec-map 95d99a6f46f46375
+serde_derive f6ce0a9ecc8a8d54
+serde_json d700243f7b28076b
+syn fe25ff706d67e971
+unicode-ident 2401bf678ea2bdeb

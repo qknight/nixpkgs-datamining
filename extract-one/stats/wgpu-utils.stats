@@ -1,0 +1,12 @@
+anyhow eaf69afb235813e8
+arbitrary 69ed2a6df155295f
+base64 233a696f7c9312d0
+bitflags f5ac402547faa839
+derive_arbitrary e3bf3b342c2cfc7d
+proc-macro2 59453eedb3fc7b39
+quote d43e4bb17a6e73bb
+ron 1bb88928fee2ea2d
+serde b964ff27a2b9b138
+serde_derive 6ef71569047159ae
+syn e6b2f2e6beedb0e3
+unicode-ident 90985a48120e6319

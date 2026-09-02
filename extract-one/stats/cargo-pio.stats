@@ -1,0 +1,14 @@
+anyhow ef2827df961b2208
+bitflags b749e3da9378cb70
+cfg-if def85bc9d3aaec5f
+embuild 415c5461967e524f
+filetime a2e080ee3fd9308c
+libc 97c4d6afcff86c88
+log 98b1643022b99b5f
+proc-macro2 3c3df45128026965
+quote 460fd54ed7464c32
+shlex 711261d797376837
+syn 496f4432798c1c7e
+thiserror fe786df9ef94a8eb
+thiserror-impl 072a916d48996ecb
+unicode-ident 2401bf678ea2bdeb

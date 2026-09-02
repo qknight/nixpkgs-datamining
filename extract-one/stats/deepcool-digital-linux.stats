@@ -1,0 +1,11 @@
+cc 3614d10c4f516af8
+cfg-if def85bc9d3aaec5f
+colored 63ebb3b30fa39208
+cpu-monitor cd784d6ad5fb68e8
+deepcool-digital-linux b810691723e0cebc
+hidapi 368748822884f16a
+libc 5c812aa120b3080e
+libloading 3e4a6dad3e43bcc0
+linux_proc 98aa8c7c4d5b7b22
+pkg-config 6b6a2e2d5499fa15
+shlex 789a38d403f1b371

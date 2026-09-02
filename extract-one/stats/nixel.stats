@@ -1,0 +1,12 @@
+autocfg 3d5abcf1e71c5ab1
+bitflags b749e3da9378cb70
+clap 4f33d3d6b14dddaa
+hashbrown 2fc0c8f14d31d328
+indexmap 752a46c89e7b80dd
+memchr 6e7606c3b07d7906
+nixel 7ab5656646b5359c
+os_str_bytes 527f6f923baa8c3c
+regex b0b68c1bddca90a8
+regex-syntax 8a258a15479db786
+santiago 0cfe805ceae5b1b8
+textwrap ff79f0aa8e328e7e

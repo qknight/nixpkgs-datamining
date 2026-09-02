@@ -1,0 +1,14 @@
+atty 470197dfee4ac650
+autocfg 3d5abcf1e71c5ab1
+bitflags b749e3da9378cb70
+clap 36839d85934ffb84
+clap_lex d75832c1f6c725b0
+hashbrown 2fc0c8f14d31d328
+indexmap 752a46c89e7b80dd
+libc d68f4aff5037e3ae
+os_str_bytes 8a4b35fecfa9b2c8
+percent-encoding de2e33133c6ed78e
+strsim c941eac585699577
+termcolor 0007156c4cb66cb8
+textwrap ff79f0aa8e328e7e
+urlencode 7635d6c6b9a179aa

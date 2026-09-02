@@ -1,0 +1,11 @@
+ahash 56a06e4de14df78f
+allocator-api2 5003cc3f929032f4
+cfg-if def85bc9d3aaec5f
+chumsky 1b7731506b8c800d
+either 88cc6451475e3cae
+hashbrown 0675d3ecb5dc7390
+itertools 00a6186192cab290
+once_cell b0df0ccc1b482d1e
+version_check 89b416c7d7485b7f
+vimcats 40c3bd2330186954
+zerocopy 55c1f2e1ec2c1076

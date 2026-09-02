@@ -1,0 +1,14 @@
+bitflags 9bdeda29f2106c9c
+cc 2dd5758195a97828
+cfg-if 0d9bd6065a3dd276
+dbus 4aa5fe238a833058
+evdev-rs 61051dcae76ae0d0
+evdev-sys 661166d25d7d0511
+getopts a191887a84a85119
+libc 02ed5445ab82a6cd
+libdbus-sys 1cb88d5997b048ec
+log 6ea426e12ccee202
+nix 913d33489cbc43f5
+pkg-config 3735705848795911
+tp-auto-kbbl 175e09d31aff777e
+unicode-width 98ced60c9d2f3f5f

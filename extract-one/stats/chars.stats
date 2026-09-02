@@ -1,0 +1,11 @@
+aho-corasick 79bedbea8c988e02
+anyhow 98d3c6aba8a9ce06
+byteorder 22e2a26819dffd05
+fst 3b8fee3ed428bdfd
+lazy_static 271f7f4fc546178a
+memchr 5496ae1c1d978488
+regex 9938c1c8be719b7d
+regex-automata b72abfee5330c4f3
+regex-syntax f5234ecb0858a6f1
+unicode-width 2c7f3bfd16db6553
+unicode_names2 9594e3172ed60d36

@@ -1,0 +1,16 @@
+anyhow cde0daeca6b36e44
+lexopt bd75d30f50682513
+libc e646cab55b006bd5
+memchr 5496ae1c1d978488
+proc-macro2 ba97841de0a21e10
+quick-xml 3b6b49f2cac8f64f
+quote e7715aa6bc0dbfbc
+syn 449ce550cc5e90cd
+unicode-ident 7081c85c6e0fc680
+wayidle 41acfdf013e5fff4
+wayrs-client df96aa666e14d52e
+wayrs-core 8dba59650387b3b6
+wayrs-proto-parser ead3ed72ed947663
+wayrs-protocols 890fcd7893ae294e
+wayrs-scanner 6aae4f936a50a117
+wayrs-utils f16eb1415c1777c7

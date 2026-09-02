@@ -1,0 +1,17 @@
+bpaf 03d6fbc0aaacfa7f
+bpaf_cauwugo 9a962a17cb64c480
+bpaf_derive 2e89f856fcbfd351
+camino 061f6bbb29c49e9b
+cargo-platform 2cded384ab784bc3
+cargo_metadata 5f1b30d1f7cac0cc
+itoa 2ccc903e09b82da9
+once_cell 9943d7cf65a4c53f
+proc-macro2 e214f8c1482d6838
+quote d2c7562a743c2311
+ryu 60d78fc006d4cdaf
+semver 8cce253ec6b32145
+serde 62436e8dcebca40d
+serde_derive bf1869e1feaa6a6a
+serde_json 00b4929b22adfb5c
+syn 65b1664a0f09e8d4
+unicode-ident df355ebb957a1c86

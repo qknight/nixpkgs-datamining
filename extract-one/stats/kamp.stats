@@ -1,0 +1,14 @@
+anyhow 2d5f31f17fa2a3b6
+argh 2859ca622614850d
+argh_derive 33eaac1f99640df8
+argh_shared 7e77e9a4e1751fb1
+kamp 04847eefd9511501
+proc-macro2 b384b51790b7d973
+quote 15db4d3355cd935f
+rust-fuzzy-search c826fb30c9a3d654
+serde 09dbc64144a8ae90
+serde_derive c272c8c7b3edf165
+syn b61bb398c0b598e1
+thiserror 049102e31630db87
+thiserror-impl 0055484a8e7d1192
+unicode-ident fbd9356613b66c8c

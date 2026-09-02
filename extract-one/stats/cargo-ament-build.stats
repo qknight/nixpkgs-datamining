@@ -1,0 +1,14 @@
+anyhow 1ebef2e0a45fb9ab
+autocfg 8f05965f36960fd3
+cargo-ament-build 2c4aa8bda9bf55fb
+cargo-manifest ab846de86f4e5574
+hashbrown ac58fb40890dcb67
+indexmap 0c524bbfe1f19bdf
+pico-args ee63fe87745b6124
+proc-macro2 0be8a918c126f20f
+quote 3c5c0f56757cd4c2
+serde d4e32fbfc6f8a590
+serde_derive 6ef71569047159ae
+syn 54b5e4acf5329d30
+toml 924321cd0a881525
+unicode-ident 90985a48120e6319

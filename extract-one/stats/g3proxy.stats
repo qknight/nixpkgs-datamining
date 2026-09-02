@@ -1,0 +1,14 @@
+anstream a13692f615efdac0
+anstyle ac532a7966be2e12
+anstyle-parse baf48fa45bc5e699
+anstyle-query 3504aee7bdded34e
+anyhow 37e967700edf27de
+capnp 76264ed43fd6e5e6
+capnpc e3d563c2e9ce721a
+clap d821e0953e3d87a7
+clap_builder 34cc14fa8bf6c8fb
+clap_lex 254f3664a161afaf
+colorchoice addec59f4e69b9e0
+is_terminal_polyfill 5ed197223b44c598
+strsim 813ab1d23dc18918
+utf8parse 75a50f5b6fb84766
