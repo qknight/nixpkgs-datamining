@@ -4,6 +4,8 @@ This project explores the impact of integrating libnix with the Rust package man
 
 This README.md provides instructions on how to reproduce the results and describes the project structure.
 
+See results at https://qknight.github.io/nixpkgs-datamining/
+
 ## Prerequisites
 
 - [NixOS](https://nixos.org/) or a compatible Nix environment
