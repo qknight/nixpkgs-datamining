@@ -232,6 +232,20 @@ function render(data) {
     .style("font-size", "11px")
     .text(d => d.total.toLocaleString());
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  fetch('../extract-one/combined.stats')
+    .then(response => response.text())
+    .then(text => {
+      const data = parseData(text);
+      status.textContent = `Loaded combined.stats (${data.length} bars)`;
+      render(data);
+    })
+    .catch(() => {
+      status.textContent = "Error loading combined.stats";
+    });
+});
+
 </script>
 </body>
 </html>
