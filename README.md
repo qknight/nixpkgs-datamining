@@ -4,8 +4,6 @@ This project explores the impact of integrating libnix with the Rust package man
 
 This README.md provides instructions on how to reproduce the results and describes the project structure.
 
-See results at https://qknight.github.io/nixpkgs-datamining/
-
 ## Prerequisites
 
 - [NixOS](https://nixos.org/) or a compatible Nix environment
@@ -66,9 +64,11 @@ See results at https://qknight.github.io/nixpkgs-datamining/
    ```
 
 6. **View Results**:
-   The final aggregated stats are available in `extract-one/combined.stats`.
+   The final aggregated stats are available in `docs/combined.stats`.
 
-   Open the graphs/data2.html and using the UI, open the combined.stats and wait 40 seconds.
+   One can see the graph here, 40 seconds loading time:
 
-         nixos@nixos ~/n/extract-one (master)> ./compute_speedup.sh ../docs/combined.stats 
+         ./compute_speedup.sh ../docs/combined.stats 
          Computed totals from ../docs/combined.stats: total_builds=360909, shared_builds=44248, speedup=8.156504248779607
+
+   [GH pages stats page](https://qknight.github.io/nixpkgs-datamining/)
