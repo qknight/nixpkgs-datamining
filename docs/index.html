@@ -234,15 +234,15 @@ function render(data) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  fetch('../extract-one/combined.stats')
+  fetch('../extract-one/combined_none-unique')
     .then(response => response.text())
     .then(text => {
       const data = parseData(text);
-      status.textContent = `Loaded combined.stats (${data.length} bars)`;
+      status.textContent = `Loaded combined_none-unique (${data.length} bars)`;
       render(data);
     })
     .catch(() => {
-      status.textContent = "Error loading combined.stats";
+      status.textContent = "Error loading combined_none-unique";
     });
 });
 
