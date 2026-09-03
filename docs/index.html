@@ -238,11 +238,11 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(response => response.text())
     .then(text => {
       const data = parseData(text);
-      status.textContent = `Loaded combined_none-unique (${data.length} bars)`;
+      status.textContent = `Loaded combined_none-unique.stats (${data.length} bars)`;
       render(data);
     })
     .catch(() => {
-      status.textContent = "Error loading combined_none-unique";
+      status.textContent = "Error loading combined_none-unique.stats";
     });
 });
 
