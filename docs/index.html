@@ -234,7 +234,7 @@ function render(data) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  fetch('../extract-one/combined_none-unique')
+  fetch('extract-one/combined_none-unique')
     .then(response => response.text())
     .then(text => {
       const data = parseData(text);
