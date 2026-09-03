@@ -70,5 +70,5 @@ See results at https://qknight.github.io/nixpkgs-datamining/
 
    Open the graphs/data2.html and using the UI, open the combined.stats and wait 40 seconds.
 
-      nixos@nixos ~/n/extract-one (master)> ./compute_speedup.sh ../docs/combined.stats 
-      Computed totals from ../docs/combined.stats: total_builds=360909, shared_builds=44248, speedup=8.156504248779607
+         nixos@nixos ~/n/extract-one (master)> ./compute_speedup.sh ../docs/combined.stats 
+         Computed totals from ../docs/combined.stats: total_builds=360909, shared_builds=44248, speedup=8.156504248779607
