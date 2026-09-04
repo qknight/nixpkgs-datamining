@@ -4,6 +4,8 @@ This project explores the impact of integrating libnix with the Rust package man
 
 This README.md provides instructions on how to reproduce the results and describes the project structure.
 
+Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485 from Sat Dec 13 13:17:29 2025
+
 ## Prerequisites
 
 - [NixOS](https://nixos.org/) or a compatible Nix environment
