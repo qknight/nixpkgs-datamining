@@ -1,6 +1,8 @@
 # Rust Ecosystem Impact Study with libnix
 
-This project explores the impact of integrating libnix with the Rust package manager, Cargo. It demonstrates how libnix could streamline crate management and improve build efficiency. 
+This project explores the impact of integrating libnix with the Rust package manager, Cargo. See http://localhost:5000/libnix_cargo-libnix_release.html for details.
+
+It demonstrates how libnix could streamline crate management and improve build efficiency.
 
 This README.md provides instructions on how to reproduce the results and describes the project structure.
 
