@@ -7,9 +7,6 @@ This README.md provides instructions on how to reproduce the results and describ
 ## Prerequisites
 
 - [NixOS](https://nixos.org/) or a compatible Nix environment
-- Python 3.x
-- [jq](https://stedolan.github.io/jq/)
-- Required Python packages: `squarify` and `matplotlib`
 
 ## Project Structure
 
@@ -18,7 +15,7 @@ This README.md provides instructions on how to reproduce the results and describ
 - `unit-graph2stats.sh`: Shell script to convert dependency data into stats.
 - `aggregate-stats.py`: Python script to aggregate statistics from multiple files.
 - `treemap_stats.py`: Python script to visualize data as a treemap.
-- `results.tar.xz`: Compressed file containing pre-generated results for convenience.
+- `results.tar.xz`: Compressed file containing pre-generated nix-build results for convenience.
 - `stats/`: Directory containing generated stats.
 - `download-src/`: Directory with final datasets including `combined.stats` and `combined_none-unique.stats`.
 
@@ -44,6 +41,8 @@ This README.md provides instructions on how to reproduce the results and describ
    ```
    Internally this calls `cargo build --unit-graph -Z unstable-options > $out/unit-graph`
 
+   **Note: You can extract the pre-generated results from `results.tar.xz` to avoid regenerating them.**
+
 3. **Convert the unit-graph to Stats**:
    Run the script to extract dependency statistics.
    ```bash
@@ -53,17 +52,11 @@ This README.md provides instructions on how to reproduce the results and describ
 4. **Aggregate the Statistics**:
    Use the Python script to aggregate statistics for visualization.
    ```bash
+   nix-shell -p python3 python3Packages.squarify python3Packages.matplotlib
    ./aggregate-stats.py stats/ combined.stats
    ```
-   You can extract the pre-generated results from `results.tar.xz` to avoid regenerating them.
 
-5. **Generate Treemap Visualization**:
-   Create a treemap to visualize dependency usage.
-   ```bash
-   python treemap_stats.py combined.stats
-   ```
-
-6. **Results & theoretical speedup**:
+5. **Results & theoretical speedup**:
    The final aggregated stats are available in `docs/combined.stats`.
 
    One can see the graph here, 40 seconds loading time:
@@ -79,7 +72,5 @@ This README.md provides instructions on how to reproduce the results and describ
    (ignoring internal crate builds). If we would have used cargo+libnix we would have had to compile 44248 only making a speedup of
    about ~ 8.1 and these intermediate build artifacts could also be used on the client side later on, so a new developer would not have
    to compile the **average 156 crate.io dependencies** but only 158/8 = ~20 instead.
-
-   
 
    [GH pages stats page](https://qknight.github.io/nixpkgs-datamining/)
