@@ -54,11 +54,13 @@ This README.md provides instructions on how to reproduce the results and describ
    ```bash
    ./aggregate-stats.py stats/ combined.stats
    ```
+   Note: The final aggregated stats are available in `docs/combined.stats`.
 
 5. **Results & theoretical speedup**:
-   The final aggregated stats are available in `docs/combined.stats`.
 
    One can see the graph here, 40 seconds loading time:
+
+   [GH pages stats page](https://qknight.github.io/nixpkgs-datamining/)
 
          ./compute_speedup.sh ../docs/combined.stats 
          Computed totals from ../docs/combined.stats: total_builds=360909, shared_builds=44248, speedup=8.156504248779607
@@ -69,7 +71,11 @@ This README.md provides instructions on how to reproduce the results and describ
 
    The result states that the 2312 out of the 2569 packages were downloaded successfully and these create none uniq 360909 dependency builds 
    (ignoring internal crate builds). If we would have used cargo+libnix we would have had to compile 44248 only making a speedup of
-   about ~ 8.1 and these intermediate build artifacts could also be used on the client side later on, so a new developer would not have
-   to compile the **average 156 crate.io dependencies** but only 158/8 = ~20 instead.
+   about ~ 8.1
+   
+   Note: Using cargo+libnix we can reuse the intermediate build artifacts, i.e. the single crate builds! That said, a new developer would not have
+   then often not have to compile most of the dependencies but instead only compile an 1/8 of them on avergage:
+   
+         158/8 = ~20
 
-   [GH pages stats page](https://qknight.github.io/nixpkgs-datamining/)
+   If we make these intermediate artifacts available from the hydra, we also speedup the build times for 'experiments within a project'.
