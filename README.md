@@ -74,13 +74,21 @@ Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485
 
          360909/2312 = 158
 
-   The result states that the 2312 out of the 2569 packages were downloaded successfully and these create non uniq 360909 dependency builds 
-   (ignoring internal crate builds). If we would have used cargo+libnix we would have had to compile 44248 only making a speedup of
-   about ~ 8.1
+   Facts:
+
+   * The ./results/ folder contained successful downloads & stats builds of **2312 out of the 2569 packages** (257 rust projects unaccounted for)
+   * **All crate.io builds around 360909 targets** (think results per rust project also contains itself, so -1 but we ignore that for now)
+   * **if we would use cargo+libnix we would have to compile only 44248 targets**, instead of all the 360909, **granting a speedup of about ~ 8.1**
    
-   Note: Using cargo+libnix we can reuse the intermediate build artifacts, i.e. the single crate builds! That said, a new developer would not have
-   then often not have to compile most of the dependencies but instead only compile an 1/8 of them on avergage:
+   In addition to this:
+
+   When using cargo+libnix we could reuse the intermediate build artifacts, i.e. the single dependency crate builds (bitflags, syn, serde, ...)! 
+   That said, when one wants to patch a software like `atuin` the build then would only compile your change and binary-subtitude all the crate.io dependencies!
+   
+   On average this would mean you would only compile 1/8 of the crates.io dependencies because of unique constrains like exotic new or old versions or feature configurations which are seldom:
    
          158/8 = ~20
 
-   If we make these intermediate artifacts available from the hydra, we also speedup the build times for 'experiments within a project'.
+# Summary
+
+Using cargo+libnix would hugely speed up the build times due to the global cache in hydra.nixos.org for create dependencies.
