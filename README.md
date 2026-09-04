@@ -14,10 +14,8 @@ This README.md provides instructions on how to reproduce the results and describ
 - `download-src.nix`: Nix script to extract cargo lock files.
 - `unit-graph2stats.sh`: Shell script to convert dependency data into stats.
 - `aggregate-stats.py`: Python script to aggregate statistics from multiple files.
-- `treemap_stats.py`: Python script to visualize data as a treemap.
 - `results.tar.xz`: Compressed file containing pre-generated nix-build results for convenience.
 - `stats/`: Directory containing generated stats.
-- `download-src/`: Directory with final datasets including `combined.stats` and `combined_none-unique.stats`.
 
 ## Steps to Reproduce
 
@@ -56,7 +54,12 @@ This README.md provides instructions on how to reproduce the results and describ
    ```
    Note: The final aggregated stats are available in `docs/combined.stats`.
 
-5. **Results & theoretical speedup**:
+5. **Generate non-unique statistics**
+   ```bash
+   cat combined.stats | grep -v '^1 .*' | sort -k2,2 -k1,1nr > combined_non-unique.stats
+   ```
+
+6. **Results & theoretical speedup**:
 
    One can see the graph here, 40 seconds loading time:
 
@@ -69,7 +72,7 @@ This README.md provides instructions on how to reproduce the results and describ
 
          360909/2312 = 158
 
-   The result states that the 2312 out of the 2569 packages were downloaded successfully and these create none uniq 360909 dependency builds 
+   The result states that the 2312 out of the 2569 packages were downloaded successfully and these create non uniq 360909 dependency builds 
    (ignoring internal crate builds). If we would have used cargo+libnix we would have had to compile 44248 only making a speedup of
    about ~ 8.1
    
