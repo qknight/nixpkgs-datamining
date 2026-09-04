@@ -15,7 +15,7 @@ This README.md provides instructions on how to reproduce the results and describ
 
 - `filter-rust.nix`: Nix script to filter Rust packages from nixpkgs.
 - `extract-one.nix`: Nix script to extract cargo lock files.
-- `deps2stats.sh`: Shell script to convert dependency data into stats.
+- `unit-graph2stats.sh`: Shell script to convert dependency data into stats.
 - `aggregate-stats.py`: Python script to aggregate statistics from multiple files.
 - `treemap_stats.py`: Python script to visualize data as a treemap.
 - `results.tar.xz`: Compressed file containing pre-generated results for convenience.
@@ -47,8 +47,10 @@ This README.md provides instructions on how to reproduce the results and describ
 3. **Convert Dependencies to Stats**:
    Run the script to extract dependency statistics.
    ```bash
-   head -n 2600 ../rust-packages.txt | xargs -n 1 -I {} bash ./deps2stats.sh result-{} {}.stats
+   head -n 2600 ../rust-packages.txt | xargs -n 1 -I 
+{} bash ./unit-graph2stats.sh results/result-{}/unit-graph stats_with_deps/{}.stats
    ```
+
 
 4. **Aggregate the Statistics**:
    Use the Python script to aggregate statistics for visualization.

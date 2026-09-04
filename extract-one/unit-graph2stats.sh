@@ -105,6 +105,7 @@ for (name, version), (_, unit) in sorted(best.items()):
     fingerprint = f\"{name}|{version}|{features}\".encode()
     new_hash = hashlib.sha256(fingerprint).hexdigest()[:16]
     lines.append(f\"{name} {new_hash}\")
+    #lines.append(f\"{name} {new_hash} # {version}|{features}\")
 
 out_path.write_text(\"\\n\".join(lines) + (\"\\n\" if lines else \"\"))
 print(f\"Unique crates: {len(lines)}\", file=sys.stderr)
