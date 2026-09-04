@@ -30,7 +30,7 @@
   <div class="info" id="status">No file loaded</div>
 </div>
 
-<div>This is the result data to <a href="https://github.com/qknight/nixpkgs-datamining">https://github.com/qknight/nixpkgs-datamining</a> which shows none-unique crate dependencies for around 2312 buildRustPackages (from 2569).
+<div>This is the result data to <a href="https://github.com/qknight/nixpkgs-datamining">https://github.com/qknight/nixpkgs-datamining</a> which shows non-unique crate dependencies for around 2312 buildRustPackages (from 2569).
 
 </div>
 
@@ -238,7 +238,7 @@ function render(data) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  fetch('combined_none-unique.stats')
+  fetch('combined_non-unique.stats')
     .then(response => response.text())
     .then(text => {
       const data = parseData(text);
