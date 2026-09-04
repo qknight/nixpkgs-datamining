@@ -63,7 +63,12 @@ Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485
    cat combined.stats | grep -v '^1 .*' | sort -k2,2 -k1,1nr > combined_non-unique.stats
    ```
 
-6. **Results & theoretical speedup**:
+6. **Architectures**
+
+   nix eval --json --file ./architectures.nix
+   {"allFour":2003,"evaluationFailures":0,"stats":[{"count":2555,"system":"x86_64-linux"},{"count":2517,"system":"aarch64-linux"},{"count":2008,"system":"x86_64-darwin"},{"count":2007,"system":"aarch64-darwin"}],"total":2569}
+
+7. **Results & theoretical speedup**:
 
    One can see the graph here, 40 seconds loading time:
 
