@@ -52,7 +52,6 @@ This README.md provides instructions on how to reproduce the results and describ
 4. **Aggregate the Statistics**:
    Use the Python script to aggregate statistics for visualization.
    ```bash
-   nix-shell -p python3 python3Packages.squarify python3Packages.matplotlib
    ./aggregate-stats.py stats/ combined.stats
    ```
 
