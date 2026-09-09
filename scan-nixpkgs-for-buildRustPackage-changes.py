@@ -13,8 +13,8 @@ from pathlib import Path
 
 
 NIXPKGS = Path("/home/nixos/nixpkgs")
-START_REV = "6973e1eb89501397cc5c2b78171d939250a5929e"
-END_REV = "095901e7684f435e6a87c27db84f5c56091d6f39"
+START_REV = "095901e7684f435e6a87c27db84f5c56091d6f39"
+END_REV = "7624768955f7736c9c10469b11ac181297020746"
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROBE = SCRIPT_DIR / "rustPlatform.buildRustPackage-probe.nix"
@@ -92,11 +92,10 @@ def load_commits(start: str, end: str) -> list[Commit]:
         except ValueError as error:
             raise ScanError(f"invalid commit timestamp for {revision}: {timestamp!r}") from error
         if not (
-            parsed_timestamp.year == 2025
-            or (parsed_timestamp.year == 2026 and parsed_timestamp.month == 1 and parsed_timestamp.day == 1)
+            parsed_timestamp.year == 2026
         ):
             raise ScanError(
-                f"commit {revision} is outside the allowed period (2025 and 2026-01-01): {timestamp}; refusing to scan"
+                f"commit {revision} is outside the allowed period (2026): {timestamp}; refusing to scan"
             )
         commits.append(Commit(revision, timestamp))
 
