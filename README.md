@@ -68,11 +68,23 @@ Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485
    nix eval --json --file ./architectures.nix
    {"allFour":2003,"evaluationFailures":0,"stats":[{"count":2555,"system":"x86_64-linux"},{"count":2517,"system":"aarch64-linux"},{"count":2008,"system":"x86_64-darwin"},{"count":2007,"system":"aarch64-darwin"}],"total":2569}
 
-7. **rust project dep complexity**
+7. **buildRustPackage in 2025**
 
-   
+   In order to see how often dependencies of buildRustPackage have to be rebuilt, i've created a [Plotly graph of 2025 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/)
 
-8. **b**
+   * 62 releases
+   * 3 reverts 
+   * 5.17 releases/month
+   * max: 25days
+
+   assuming each change would rebuild all nixpkgs using buildRustPackages we would have:
+
+   2569 * 4 * 62 * 360909 = 229939454808 
+
+   which are 230 billion crates.io compiles
+
+
+8. **tba**
 
 9. **Results & theoretical speedup**:
 
