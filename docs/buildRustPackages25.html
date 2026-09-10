@@ -1,17 +1,18 @@
 <head>
 	<!-- Load plotly.js into the DOM -->
 	<script src='https://cdn.plot.ly/plotly-4.0.0.min.js' charset="utf-8"></script>
-
+  <title>buildRustPackage 2026</title>
 </head>
 
 <body>
-    
+  <div id='yearControls'></div>
   <div id='myDiv' style="width:100%;height:60vh"><!-- Plotly chart will be drawn inside this DIV --></div>
   <div id="stats" style="margin-top:8px;font:14px/1.4 system-ui, sans-serif;"></div>
 
 </body>
 
 <script>
+
 // Parse release data (timestamp, commit, path); extract date only (YYYY-MM-DD)
 const raw = `
 2025-01-01T12:34:07+01:00 6973e1eb89501397cc5c2b78171d939250a5929e /nix/store/x6jyjcw4aaab9m4vs1l2nq716w1bjpk1-rust-platform-probe-1.drv

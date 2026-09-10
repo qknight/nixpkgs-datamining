@@ -70,7 +70,7 @@ Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485
 
 7. **buildRustPackage in 2025**
 
-   In order to see how often dependencies of buildRustPackage have to be rebuilt, i've created a [Plotly graph of 2025 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/plotly.html)
+   In order to see how often dependencies of buildRustPackage have to be rebuilt, i've created a [Plotly graph of 2025 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages25.html) and a [Plotly graph of 2026 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages26.html)
 
    * 62 releases
    * 3 reverts 

@@ -1,0 +1,162 @@
+<head>
+	<!-- Load plotly.js into the DOM -->
+	<script src='https://cdn.plot.ly/plotly-4.0.0.min.js' charset="utf-8"></script>
+
+</head>
+
+<body>
+  <div id='yearControls'></div>
+  <div id='myDiv' style="width:100%;height:60vh"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <div id="stats" style="margin-top:8px;font:14px/1.4 system-ui, sans-serif;"></div>
+</body>
+
+<script>
+
+const raw = `
+2026-01-01T11:30:04Z 095901e7684f435e6a87c27db84f5c56091d6f39 /nix/store/946mskn8fa7wnwwwfl06q4m04w4far0z-rust-platform-probe-1.drv
+2026-01-14T20:26:50Z c9815a39ec1e34410821f722e77abdcd22915956 /nix/store/008yhbjhcg31p2cis1ha3fc3396nchnz-rust-platform-probe-1.drv
+2026-01-20T11:38:11Z 8be8dbc613fcca723f1155c0e616678fa20cd0c2 /nix/store/w4wrskx5xamw6cs2fdlspf80mxgjxh64-rust-platform-probe-1.drv
+2026-01-22T18:23:52Z 701f311414c3fecbddf6d9c4457d87e467e760ed /nix/store/pijf5qkkp556zhgx5vi82yk1rl4fz5x2-rust-platform-probe-1.drv
+2026-02-08T09:07:25Z fc326117a073c6ad2e1ebbba28a20e11c2d3809f /nix/store/dkz2yk2z6kafa4xby6z28aj7x51r7dgb-rust-platform-probe-1.drv
+2026-02-08T15:33:55Z 865ee79f09174d24915d03557e5957be9a8285c0 /nix/store/38ciigdnmaz89333p3scbkz8hxb88ab7-rust-platform-probe-1.drv
+2026-02-16T12:38:32Z 2a5cc1d91583333dc6b59568007cbf41a3646b24 /nix/store/9kzn0n5svgvslrkrmzrnyr85bwncpdzv-rust-platform-probe-1.drv
+2026-02-22T22:38:53Z 594e0e2223c0ac88570e22b3c1ffbd0156e7dc73 /nix/store/hb321091aw96l38v8qy5565m1hkwg3sw-rust-platform-probe-1.drv
+2026-02-23T12:03:00Z bd5580cf56affe8d8515dd50cedbdb467838954f /nix/store/wa774hyiqh8qp7lf9wai1497ld2jf4ci-rust-platform-probe-1.drv
+2026-02-28T22:08:54Z b4d0b0a07ccae4bee269a520485e9624226ecd10 /nix/store/0h9f1kifk6ydinp5z30bkdny3m1f1r27-rust-platform-probe-1.drv
+2026-03-05T12:00:10Z 3a3381ead01d2fb4e3d85be5e3db1e8a4075fe34 /nix/store/266pyj7883q7pgsj1kpbd46g43sn1fjr-rust-platform-probe-1.drv
+2026-03-05T14:42:26Z 954e9a9127b88c528b232c48142345c8d845951a /nix/store/d3p152yzf3ydfdlh4zwnvpqbki445j47-rust-platform-probe-1.drv
+2026-03-06T15:23:19Z 16acb176369e4d85cd42f5e226d54bd72cba3ce1 /nix/store/gqqi4ag6pp4pvbm21lv07bcpg455rahm-rust-platform-probe-1.drv
+2026-03-20T09:28:36Z 321621130e822a991888f5b6b9051b37c0f256ff /nix/store/n88xq6jfmn60prcw3nj59rxpnpa6db68-rust-platform-probe-1.drv
+2026-04-22T15:21:43+02:00 9cadaf6932b7c926e468f777549d57f04a7212da /nix/store/8cv8c6hzqcv9sjk6vs2rh594i3mx9x4l-rust-platform-probe-1.drv
+2026-04-26T01:31:23Z 941b631956516306effaed1641bd00f2ab2e570b /nix/store/bg7d7vn74plgmy1sbl5g2y79k2708jd5-rust-platform-probe-1.drv
+2026-05-20T13:49:45+02:00 00e16e88fac47cb8da7d0ba82fdc6f3e169c3354 /nix/store/k0srz5y888phbrppk77sd25541jkdg9z-rust-platform-probe-1.drv
+2026-05-24T15:07:40+02:00 a2e55e31d6b0c104e92922c241ec5090be99b912 /nix/store/dfrgqrpdz69zzf8y5dsiygc362ggdz71-rust-platform-probe-1.drv
+2026-05-28T00:07:30Z 7b0f8708ea4aaa6bf095f0b52ba51b187393e2ae /nix/store/k9z9wcbrycihm1fmzwyaf7ck7wvkxsxh-rust-platform-probe-1.drv
+2026-06-04T06:48:05Z 6c103ed7ba538af366d53c80cad5454bf63a8329 /nix/store/4dl45ca0sjaqwpl6fzgfyap8aylnp8nc-rust-platform-probe-1.drv
+2026-06-11T15:56:08Z fc80b7c658af290a6974adce0fe32696d309679b /nix/store/ia7bzxfd2i2j5bs1hxccm06bcndijc3v-rust-platform-probe-1.drv
+2026-06-17T14:51:52Z 88c94c9bb3d151afc6f404b9769f0263d5987eea /nix/store/x7agg1l5mdlz7l92psf8w2c6g2kbrd28-rust-platform-probe-1.drv
+2026-06-25T18:52:58Z c2fabc3517f579e92944e79e8f22c007e78c7de3 /nix/store/xjhwkhasrxql3r9qcg4lwm3a0mjlxkxw-rust-platform-probe-1.drv
+2026-07-08T16:47:59+02:00 1e94a0307f544377e2f2332daa7fca2833a1adc3 /nix/store/jijxd8h9493hf6s37prl65vi6vsprknr-rust-platform-probe-1.drv
+2026-07-20T15:41:43Z 307e8e4aa0873a206264db7da7f0427d0c0859df /nix/store/zd1hwlq6clqc362ri7kzhlnr5dcdgd83-rust-platform-probe-1.drv
+2026-08-01T07:56:04Z 6161f2a6ebe918bde32634705a97ad6e22606b1b /nix/store/v3x9wksniy22c6wkdnd6lmxnydqh5953-rust-platform-probe-1.drv
+2026-08-10T11:50:31Z 22acd3aa72fa72b27cf49e3b369bd3602e092b12 /nix/store/cc8171y5rzvjdgpfick8wqb27747gqjx-rust-platform-probe-1.drv
+2026-08-12T06:04:51Z 867dcbc30bafe3c862ef88620f2e7a109d7d3be5 /nix/store/fsx1ncbf7mdbrdc1bc6n60s0m7vkrb75-rust-platform-probe-1.drv
+2026-08-25T15:57:30Z 103cb3a0b62b1d0a4560d265cdfbc0af064f6767 /nix/store/05fswdxsj4db0i714d3m2py6j1bv21m1-rust-platform-probe-1.drv
+`.trim();
+
+const lines = raw.split('\n');
+
+const releases = lines.map((line, i) => {
+  const m = line.match(/^(\S+)\s+([0-9a-f]{40})\s+(\S+)$/i);
+  if (!m) return null;
+  const [_, ts, commit, path] = m;
+  return {
+    idx: i + 1,              // line number (y-axis)
+    ts,                      // full timestamp
+    date: ts.slice(0, 10),   // extract date only (YYYY-MM-DD)
+    commit,
+    path
+  };
+}).filter(Boolean);
+
+// Build horizontal segments: from this date to next date at constant y = line number
+const x = [];
+const y = [];
+const hover = [];
+for (let i = 0; i < releases.length; i++) {
+  const start = releases[i].date;
+  const end = (i < releases.length - 1) ? releases[i + 1].date : '2025-12-31';
+  const yy = releases[i].idx;
+
+  x.push(start, end, null);
+  y.push(yy, yy, null);
+  const ht = `#${yy} ${releases[i].commit}<br>${releases[i].path}<br>${releases[i].ts}`;
+  hover.push(ht, ht, null);
+}
+
+const data = [{
+  type: 'scatter',
+  mode: 'lines',
+  x,
+  y,
+  text: hover,
+  hovertemplate: 'release %{y}<br>%{x}<br>%{text}<extra></extra>',
+  line: { width: 4 },
+  showlegend: false
+}];
+var config = {responsive: true}
+
+const layout = {
+  title: { text: 'Release timeline (2025)' },
+  xaxis: {
+    type: 'date',
+    range: ['2025-01-01', '2025-12-31'],
+    tickformat: '%b',
+    dtick: 'M1',
+    title: { text: '2025' }
+  },
+  yaxis: {
+    title: { text: 'release' },
+    tick0: 0,   // align ticks at 0, 10, 20, ...
+    dtick: 10,  // step of 10
+    rangemode: 'tozero'
+  },
+  autosize: true,
+
+  margin: { l: 70, r: 20, t: 60, b: 50 }
+};
+
+Plotly.newPlot('myDiv', data, layout, config);
+
+// --- Stats: days in use per release ---
+  function toUTCDate(yyyyMmDd) {
+    const [Y, M, D] = yyyyMmDd.split('-').map(Number);
+    return new Date(Date.UTC(Y, M - 1, D));
+  }
+
+  // Difference in calendar days (end exclusive)
+  function daysBetween(startStr, endStr) {
+    const ms = toUTCDate(endStr) - toUTCDate(startStr);
+    return Math.max(0, ms / 86400000);
+  }
+
+  const durations = releases.map((r, i) => {
+    const end = (i < releases.length - 1) ? releases[i + 1].date : '2025-12-31';
+    return { idx: r.idx, days: daysBetween(r.date, end) };
+  });
+
+  const vals = durations.map(d => d.days);
+  const n = vals.length;
+  const sorted = [...vals].sort((a, b) => a - b);
+  const mean = vals.reduce((a, b) => a + b, 0) / n;
+  function percentile(p) {
+    if (!n) return NaN;
+    const pos = (n - 1) * p;
+    const b = Math.floor(pos), r = pos - b;
+    return sorted[b + 1] !== undefined ? sorted[b] + r * (sorted[b + 1] - sorted[b]) : sorted[b];
+  }
+  const median = percentile(0.5);
+  const p25 = percentile(0.25);
+  const p75 = percentile(0.75);
+  const p90 = percentile(0.90);
+  const min = sorted[0];
+  const max = sorted[sorted.length - 1];
+  const variance = vals.reduce((a, v) => a + Math.pow(v - mean, 2), 0) / (n - 1);
+  const stdev = Math.sqrt(variance);
+  const releasesPerMonth = n / 12;
+
+  const statsDiv = document.getElementById('stats');
+  statsDiv.innerHTML = `
+    <b>Usage-days between releases <abbr title="We measure each release’s duration from its date up to (but not including) the next release date; the last runs to 2025‑12‑31.">(end exclusive)</abbr></b><br>
+    <abbr title="Total number of releases included">count</abbr>=${n},
+    <abbr title="Arithmetic mean of days in use">avg</abbr>=${mean.toFixed(2)}d,
+    <abbr title="50th percentile; half the releases are shorter, half longer">median</abbr>=${median.toFixed(1)}d,
+    <abbr title="25th percentile (first quartile); 25% are shorter">p25</abbr>=${p25.toFixed(1)}d,
+    <abbr title="75th percentile (third quartile); 25% are longer">p75</abbr>=${p75.toFixed(1)}d,
+    <abbr title="90th percentile; only 10% lasted longer">p90</abbr>=${p90.toFixed(1)}d,
+    <abbr title="Shortest days-in-use gap">min</abbr>=${min.toFixed(0)}d,
+    <abbr title="Longest days-in-use gap">max</abbr>=${max.toFixed(0)}d,
+    <abbr title="Sample standard deviation; higher means more variable cadence">std</abbr>=${stdev.toFixed(2)}d<br>
+    <abbr title="Average number of releases per month in 2025 (count ÷ 12)">cadence</abbr> ≈ ${releasesPerMonth.toFixed(2)} releases/month
+  `;
+</script>
