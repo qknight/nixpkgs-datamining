@@ -77,6 +77,10 @@ we count changes that force re-evaluation/rebuilds, including stdenv, rustc/carg
 ```bash
 python scan-nixpkgs-for-buildRustPackage-changes.py
 ```
+
+* [plotly graph of 2025 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages25.html) 
+* [Plotly graph of 2026 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages26.html)
+
 highlights (2025):
 - 62 releases, 3 reverts
 - analyzed 2312 of 2569 rust projects (~90%)
