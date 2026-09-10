@@ -147,16 +147,6 @@ Plotly.newPlot('myDiv', data, layout, config);
 
   const statsDiv = document.getElementById('stats');
   statsDiv.innerHTML = `
-    <b>Usage-days between releases <abbr title="We measure each release’s duration from its date up to (but not including) the next release date; the last runs to 2025‑12‑31.">(end exclusive)</abbr></b><br>
-    <abbr title="Total number of releases included">count</abbr>=${n},
-    <abbr title="Arithmetic mean of days in use">avg</abbr>=${mean.toFixed(2)}d,
-    <abbr title="50th percentile; half the releases are shorter, half longer">median</abbr>=${median.toFixed(1)}d,
-    <abbr title="25th percentile (first quartile); 25% are shorter">p25</abbr>=${p25.toFixed(1)}d,
-    <abbr title="75th percentile (third quartile); 25% are longer">p75</abbr>=${p75.toFixed(1)}d,
-    <abbr title="90th percentile; only 10% lasted longer">p90</abbr>=${p90.toFixed(1)}d,
-    <abbr title="Shortest days-in-use gap">min</abbr>=${min.toFixed(0)}d,
-    <abbr title="Longest days-in-use gap">max</abbr>=${max.toFixed(0)}d,
-    <abbr title="Sample standard deviation; higher means more variable cadence">std</abbr>=${stdev.toFixed(2)}d<br>
-    <abbr title="Average number of releases per month in 2026 (count ÷ 12)">cadence</abbr> ≈ ${releasesPerMonth.toFixed(2)} releases/month
+    
   `;
 </script>
