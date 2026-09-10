@@ -68,8 +68,28 @@ cat combined.stats | grep -v '^1 .*' | sort -k2,2 -k1,1nr > combined_non-unique.
 evaluate supported systems (example output shown):
 ```bash
 nix eval --json --file ./architectures.nix
+{
+  "stats": [
+    {
+      "count": 2555,
+      "system": "x86_64-linux"
+    },
+    {
+      "count": 2517,
+      "system": "aarch64-linux"
+    },
+    {
+      "count": 2008,
+      "system": "x86_64-darwin"
+    },
+    {
+      "count": 2007,
+      "system": "aarch64-darwin"
+    }
+  ],
+}
 ```
-{"allFour":2003,"evaluationFailures":0,"stats":[{"count":2555,"system":"x86_64-linux"},{"count":2517,"system":"aarch64-linux"},{"count":2008,"system":"x86_64-darwin"},{"count":2007,"system":"aarch64-darwin"}],"total":2569}
+
 
 ## frequency of buildRustPackage-related changes
 
