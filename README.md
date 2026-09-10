@@ -82,6 +82,7 @@ see https://lastlog.de/libnix_cargo-libnix_release.html for details.
    * using the numbers from year 2025
    * 62 releases
    * 3 reverts 
+   * analyzed 2312 projects of 2569 (~90%)
    * 158 = 360909/2312 = Average crate.io dependencies per project
    * assuming 2569 rust projects also shares ~ 158 crates.io dependencies
    * rust projects (built for different architectures): 9087 = 2555 + 2517 + 2008 + 2007
@@ -123,6 +124,6 @@ see https://lastlog.de/libnix_cargo-libnix_release.html for details.
 
 # Summary
 
-using cargo+libnix could hugely speed up the build times due to fine grained caching. using cargo+libnix, in other words, one only needs to compile 12% of all the crate dependencies or a project. it is important to note that a typical rust project consists of one or several additional crates which are compiled into a rlib and a binary.
+using cargo+libnix could hugely speed up the build times due to fine grained caching. using cargo+libnix, in other words, one only needs to compile 12% of all the crate dependencies on average. it is important to note that a typical rust project consists of one or several additional crates which are compiled into a rlib and a binary.
 
 Additionally cargo+libnix will speed up development because on average only 20 of the 158 average dependencies need to be build locally - statistically and the others can be downloaded.
