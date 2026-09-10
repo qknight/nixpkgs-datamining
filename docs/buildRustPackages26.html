@@ -65,7 +65,7 @@ const y = [];
 const hover = [];
 for (let i = 0; i < releases.length; i++) {
   const start = releases[i].date;
-  const end = (i < releases.length - 1) ? releases[i + 1].date : '2025-12-31';
+  const end = (i < releases.length - 1) ? releases[i + 1].date : '2026-12-31';
   const yy = releases[i].idx;
 
   x.push(start, end, null);
@@ -87,13 +87,13 @@ const data = [{
 var config = {responsive: true}
 
 const layout = {
-  title: { text: 'Release timeline (2025)' },
+  title: { text: 'Release timeline (2026)' },
   xaxis: {
     type: 'date',
-    range: ['2025-01-01', '2025-12-31'],
+    range: ['2026-01-01', '2026-12-31'],
     tickformat: '%b',
     dtick: 'M1',
-    title: { text: '2025' }
+    title: { text: '2026' }
   },
   yaxis: {
     title: { text: 'release' },
@@ -121,7 +121,7 @@ Plotly.newPlot('myDiv', data, layout, config);
   }
 
   const durations = releases.map((r, i) => {
-    const end = (i < releases.length - 1) ? releases[i + 1].date : '2025-12-31';
+    const end = (i < releases.length - 1) ? releases[i + 1].date : '2026-12-31';
     return { idx: r.idx, days: daysBetween(r.date, end) };
   });
 
@@ -157,6 +157,6 @@ Plotly.newPlot('myDiv', data, layout, config);
     <abbr title="Shortest days-in-use gap">min</abbr>=${min.toFixed(0)}d,
     <abbr title="Longest days-in-use gap">max</abbr>=${max.toFixed(0)}d,
     <abbr title="Sample standard deviation; higher means more variable cadence">std</abbr>=${stdev.toFixed(2)}d<br>
-    <abbr title="Average number of releases per month in 2025 (count ÷ 12)">cadence</abbr> ≈ ${releasesPerMonth.toFixed(2)} releases/month
+    <abbr title="Average number of releases per month in 2026 (count ÷ 12)">cadence</abbr> ≈ ${releasesPerMonth.toFixed(2)} releases/month
   `;
 </script>
