@@ -119,6 +119,8 @@ so during 2025, hydra.nixos.org compiled roughly ~85 million crates.io dependenc
 see the interactive stats (loads in ~40s):
 - gh pages: https://qknight.github.io/nixpkgs-datamining/
 
+* [graph of non-uniq crate.io dependencies](https://qknight.github.io/nixpkgs-datamining/index.html)
+
 compute speedup:
 ```bash
 ./compute_speedup.sh ../docs/combined.stats
