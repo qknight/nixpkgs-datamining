@@ -1,14 +1,12 @@
-# Rust Ecosystem Impact Study with libnix
+# Rust in nixpkgs ecosystem impact study
 
-This project explores the impact of integrating libnix with the Rust package manager, Cargo. See http://localhost:5000/libnix_cargo-libnix_release.html for details.
+this project explores the impact of integrating libnix with the rust package manager, cargo in nixpkgs and proposes potential savings with using libnix instead. 
 
-It demonstrates how libnix could streamline crate management and improve build efficiency.
+see https://lastlog.de/libnix_cargo-libnix_release.html for details.
 
-This README.md provides instructions on how to reproduce the results and describes the project structure.
+**this README.md provides instructions on how to reproduce the results of the study and is based on nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485 from Sat Dec 13 13:17:29 2025**
 
-Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485 from Sat Dec 13 13:17:29 2025
-
-## Prerequisites
+## prerequisites
 
 - [NixOS](https://nixos.org/) or a compatible Nix environment
 
@@ -21,9 +19,9 @@ Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485
 - `results.tar.xz`: Compressed file containing pre-generated nix-build results for convenience.
 - `stats/`: Directory containing generated stats.
 
-## Steps to Reproduce
+# Steps to Reproduce
 
-1. **Identify Rust Packages using buildRustPackage**:
+## **Identify Rust Packages using buildRustPackage**:
    Run the filter script to identify Rust packages compiled with `buildRustPackage`.
    ```bash
    nix run nixpkgs#nix-eval-jobs -- \
@@ -36,7 +34,7 @@ Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485
    jq -r 'select(.error == null and .drvPath != null) | .attr' rust-eval.jsonl | sort -u > rust-packages.txt
    ```
 
-2. **Extract Cargo.lock and Cargo.toml and generate unit-graph**:
+## **Extract Cargo.lock and Cargo.toml and generate unit-graph**:
    Use `download-src.nix` to obtain Cargo.lock files.
    ```bash
    head -n 2600 ../rust-packages.txt | xargs -n 1 -I {} bash nix-build download-src.nix {}
@@ -45,49 +43,57 @@ Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485
 
    **Note: You can extract the pre-generated results from `results.tar.xz` to avoid regenerating them.**
 
-3. **Convert the unit-graph to Stats**:
+## **Convert the unit-graph to Stats**:
    Run the script to extract dependency statistics.
    ```bash
    head -n 2600 ../rust-packages.txt | xargs -n 1 -I {} bash ./unit-graph2stats.sh results/result-{}/unit-graph stats_with_deps/{}.stats
    ```
 
-4. **Aggregate the Statistics**:
+## **Aggregate the Statistics**:
    Use the Python script to aggregate statistics for visualization.
    ```bash
    ./aggregate-stats.py stats/ combined.stats
    ```
    Note: The final aggregated stats are available in `docs/combined.stats`.
 
-5. **Generate non-unique statistics**
+## **generate non-unique statistics**
    ```bash
    cat combined.stats | grep -v '^1 .*' | sort -k2,2 -k1,1nr > combined_non-unique.stats
    ```
 
-6. **Architectures**
+## **architectures**
 
    nix eval --json --file ./architectures.nix
    {"allFour":2003,"evaluationFailures":0,"stats":[{"count":2555,"system":"x86_64-linux"},{"count":2517,"system":"aarch64-linux"},{"count":2008,"system":"x86_64-darwin"},{"count":2007,"system":"aarch64-darwin"}],"total":2569}
 
-7. **buildRustPackage in 2025**
+## **identify `buildRustPackage` changes leading to forced new evaluation**
 
-   In order to see how often dependencies of buildRustPackage have to be rebuilt, i've created a [Plotly graph of 2025 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages25.html) and a [Plotly graph of 2026 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages26.html)
+   Next we need to find out how often `buildRustPackage` changes. Changes include:
+   * stdenv
+   * rustc, cargo updates
+   * changes to the `buildRustPackage` nix implementation
 
-   * year 2025
+         python scan-nixpkgs-for-buildRustPackage-changes.py 
+   
+   with a checkout of nixpkgs will just do that.
+
+   The results show how often dependencies of `buildRustPackage` have to be rebuilt, i've created a [Plotly graph of 2025 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages25.html) and a [Plotly graph of 2026 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages26.html)
+
+   * using the numbers from year 2025
    * 62 releases
    * 3 reverts 
    * 158 = 360909/2312 = Average crate.io dependencies per project
    * assuming 2569 rust projects also shares ~ 158 crates.io dependencies
+   * rust projects (built for different architectures): 9087 = 2555 + 2517 + 2008 + 2007
 
-   assuming each change in nixpkgs affecting a `buildRustPackages` change, then:
+   now, assuming each change in nixpkgs affecting a `buildRustPackages` change, then:
 
    * creates.io compiles = rust projects * average crates.io dependencies * architectures * releases
-   * creates.io compiles = 2569 * 158 * 4 * 59 = 95792872 
+   * creates.io compiles = 9087 * 158 * 59 = 84709014 
 
-   so during **2025 we compiled roughtly ~100 million crates.io dependencies**
+   so during **2025 hydra.nixos.org compiled roughtly ~85 million crates.io dependencies**
 
-8. **tba**
-
-9. **Results & theoretical speedup**:
+## **results & theoretical speedup**:
 
    One can see the graph here, 40 seconds loading time:
 
@@ -115,8 +121,8 @@ Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485
    
          158/8 = ~20
 
-8. 
-
 # Summary
 
-Using cargo+libnix would hugely speed up the build times due to the global cache in hydra.nixos.org for create dependencies.
+using cargo+libnix could hugely speed up the build times due to fine grained caching. using cargo+libnix, in other words, one only needs to compile 12% of all the crate dependencies or a project. it is important to note that a typical rust project consists of one or several additional crates which are compiled into a rlib and a binary.
+
+Additionally cargo+libnix will speed up development because on average only 20 of the 158 average dependencies need to be build locally - statistically and the others can be downloaded.
