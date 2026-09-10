@@ -129,12 +129,12 @@ compute speedup:
 averages and facts:
 - average crates.io dependencies per project: 360909/2312 ≈ 158
 - successful stats for 2312 of 2569 packages (257 missing)
-- total crates.io builds observed: ~360,909 targets (per project includes itself; we ignore -1)
+- total crates.io builds estimated: ~360,909 targets (per project includes itself; we ignore -1)
 - with cargo+libnix, only ~44,248 targets would build, yielding ~8.1× speedup
 
 additional implication:
-- cargo+libnix can reuse intermediate crate builds (e.g., bitflags, syn, serde), so editing a package like atuin would often only rebuild local changes while substituting dependencies from cache.
-- on average, only about 1/8 of crates.io dependencies would build locally due to uniqueness (versions/features), i.e., ~20 of 158:
+- cargo+libnix can reuse intermediate crate builds (e.g., bitflags, syn, serde), so first time compiling a rust project like `atuin` would then often only need to build the 'actual' changes while substituting crates.io dependencies from cache.
+- on average one can expect that only about 1/8 of crates.io dependencies would have to be built locally due to uniqueness (versions/features), i.e., ~20 of 158:
 ```text
 158/8 ≈ 20
 ```
@@ -142,3 +142,5 @@ additional implication:
 ## summary
 
 using cargo+libnix can significantly reduce build times via fine-grained caching: on average, only ~12% of crate dependencies need compilation. this also accelerates local development, where roughly ~20 of the ~158 average dependencies would build, with the rest substituted from cache.
+
+note: in nixpkgs `buildRustPackage` is always called with the same version of `cargo` and `rustc` which would be the minimal requirement to reuse crates between rust projects later using cargo+libnix.
