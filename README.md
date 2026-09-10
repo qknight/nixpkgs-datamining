@@ -72,17 +72,18 @@ Stats about rust crate usage in nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485
 
    In order to see how often dependencies of buildRustPackage have to be rebuilt, i've created a [Plotly graph of 2025 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages25.html) and a [Plotly graph of 2026 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages26.html)
 
+   * year 2025
    * 62 releases
    * 3 reverts 
-   * 5.17 releases/month
-   * max: 25days
+   * 158 = 360909/2312 = Average crate.io dependencies per project
+   * assuming 2569 rust projects also shares ~ 158 crates.io dependencies
 
-   assuming each change would rebuild all nixpkgs using buildRustPackages we would have:
+   assuming each change in nixpkgs affecting a `buildRustPackages` change, then:
 
-   2569 * 4 * 62 * 360909 = 229939454808 
+   * creates.io compiles = rust projects * average crates.io dependencies * architectures * releases
+   * creates.io compiles = 2569 * 158 * 4 * 59 = 95792872 
 
-   which are 230 billion crates.io compiles
-
+   so during **2025 we compiled roughtly ~100 million crates.io dependencies**
 
 8. **tba**
 
