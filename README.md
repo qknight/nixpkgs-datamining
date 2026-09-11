@@ -131,9 +131,9 @@ then these two files were created:
 
     the `combined_non-unique.stats` holds all the dependencies of the 2312 rust projects which are references more than once (44248 dependencies)! 
 
-note: like in npm, often one rust project uses a crate like bitflags in multiple versions.
+    note: similar in npm, rust project nowadays often use more than one version of `bitflags` in one project.
 
-a visualization of `combined_non-unique.stats` using d3 is here (warning: long load time ~40s):
+a visualization of `combined_non-unique.stats` using d3 is here, **warning: long load time ~40s**:
 * [d3 graph of combined_non-unique.stats](https://qknight.github.io/nixpkgs-datamining/index.html)
 
 compute speedup:
