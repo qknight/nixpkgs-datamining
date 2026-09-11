@@ -91,7 +91,7 @@ nix eval --json --file ./architectures.nix
 ```
 
 
-## frequency of buildRustPackage-related changes
+## `buildRustPackage` frequency of updates
 
 we count changes that force re-evaluation/rebuilds, including stdenv, rustc/cargo updates, or nix changes in buildRustPackage.
 ```bash
@@ -114,10 +114,22 @@ assuming each relevant nixpkgs change affects buildRustPackage:
 
 so during 2025, hydra.nixos.org compiled roughly ~85 million crates.io dependencies.
 
-## results and theoretical speedup
+## crate.io dependencies of the 2312 `buildRustPackage` rust projects
 
-see the interactive stats (loads in ~40s):
-* [d3 graph of non-uniq crate.io dependencies](https://qknight.github.io/nixpkgs-datamining/index.html)
+using the script `unit-graph2stats.sh` we list all crate.io dependencies by name and hash where the hash consists of:
+
+```python
+fingerprint = f\"{name}|{version}|{features}\".encode()
+new_hash = hashlib.sha256(fingerprint).hexdigest()[:16]
+```
+
+* [combined.stats](https://qknight.github.io/nixpkgs-datamining/combined.stats)
+* [combined_non-unique.stats](https://qknight.github.io/nixpkgs-datamining/combined_non-unique.stats)
+
+the `combined_non-unique.stats` holds all the dependencies of the 2312 rust projects which are references more than once!
+
+a visualization of `combined_non-unique.stats` using d3 is here (warning: long load time ~40s):
+* [d3 graph of combined_non-unique.stats](https://qknight.github.io/nixpkgs-datamining/index.html)
 
 compute speedup:
 ```bash
