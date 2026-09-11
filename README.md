@@ -1,10 +1,11 @@
 # rust in nixpkgs ecosystem impact study
 
-this project explores the impact of integrating libnix with the rust package manager, cargo, in nixpkgs and proposes potential build savings by using libnix.
+this repository holds the scripts and data used to explores the impact of integrating nix into cargo, i.e. cargo+libnix.
 
-see https://lastlog.de/libnix_cargo-libnix_release.html for details.
 
 **this readme.md provides instructions to reproduce the study, based on nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485 from sat dec 13 13:17:29 2025**
+
+see https://lastlog.de/libnix_cargo-libnix_release.html for details.
 
 ## prerequisites
 
@@ -126,7 +127,9 @@ new_hash = hashlib.sha256(fingerprint).hexdigest()[:16]
 * [combined.stats](https://qknight.github.io/nixpkgs-datamining/combined.stats)
 * [combined_non-unique.stats](https://qknight.github.io/nixpkgs-datamining/combined_non-unique.stats)
 
-the `combined_non-unique.stats` holds all the dependencies of the 2312 rust projects which are references more than once!
+the `combined_non-unique.stats` holds all the dependencies of the 2312 rust projects which are references more than once (44248 dependencies)! 
+
+note: like in npm, often one rust project uses a crate like bitflags in multiple versions.
 
 a visualization of `combined_non-unique.stats` using d3 is here (warning: long load time ~40s):
 * [d3 graph of combined_non-unique.stats](https://qknight.github.io/nixpkgs-datamining/index.html)
