@@ -7,6 +7,13 @@ this repository holds the scripts and data used to explores the impact of integr
 
 see https://lastlog.de/libnix_cargo-libnix_release.html for details.
 
+## rust projects
+
+this study analyzed 2312 of 2569 rust projects (~90%)
+
+* [rust packages included](https://github.com/qknight/nixpkgs-datamining/blob/master/extract-one/.download_success)
+* [rust packages excluded](https://github.com/qknight/nixpkgs-datamining/blob/master/extract-one/.download_failed)
+
 ## prerequisites
 
 - nixos or a compatible nix environment
@@ -129,7 +136,7 @@ then these two files were created:
 * [combined.stats](https://qknight.github.io/nixpkgs-datamining/combined.stats)
 * [combined_non-unique.stats](https://qknight.github.io/nixpkgs-datamining/combined_non-unique.stats)
 
-    the `combined_non-unique.stats` holds all the dependencies of the 2312 rust projects which are references more than once (44248 dependencies)! 
+    the `combined_non-unique.stats` combines all the dependencies of 2312 analyzed rust projects but is filtered to contain only crate.io references which were used by more than one project (44248 shared dependencies)! 
 
     note: similar in npm, rust project nowadays often use more than one version of `bitflags` in one project.
 
