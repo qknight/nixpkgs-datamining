@@ -124,10 +124,12 @@ fingerprint = f\"{name}|{version}|{features}\".encode()
 new_hash = hashlib.sha256(fingerprint).hexdigest()[:16]
 ```
 
+then these two files were created:
+
 * [combined.stats](https://qknight.github.io/nixpkgs-datamining/combined.stats)
 * [combined_non-unique.stats](https://qknight.github.io/nixpkgs-datamining/combined_non-unique.stats)
 
-the `combined_non-unique.stats` holds all the dependencies of the 2312 rust projects which are references more than once (44248 dependencies)! 
+    the `combined_non-unique.stats` holds all the dependencies of the 2312 rust projects which are references more than once (44248 dependencies)! 
 
 note: like in npm, often one rust project uses a crate like bitflags in multiple versions.
 
