@@ -1,5 +1,5 @@
 # extract-one.nix
-{ nixpkgsPath ? /home/nixos/nixpkgs
+{ nixpkgsPath ? ./nixpkgs
 , attr
 }:
 

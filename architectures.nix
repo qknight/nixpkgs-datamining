@@ -1,5 +1,5 @@
 let
-  nixpkgsPath = /home/nixos/nixpkgs;
+  nixpkgsPath = ./nixpkgs;
 
   systems = [
     "x86_64-linux"

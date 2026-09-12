@@ -34,130 +34,169 @@
         libxi
       ];
 
-      # Shared bwrap sandbox.
-      #
-      # Important:
-      # - host / is NOT visible
-      # - host /home is NOT visible
-      # - only the project directory is RW-mounted
-      # - OpenCode gets a private persistent home
-      # - build artifacts get a separate persistent directory
-      # - /nix is read-only
-      # - OPENAI_API_KEY is explicitly passed through
       mkSandboxScript = pkgs: name:
-        pkgs.writeShellScriptBin name ''
-          set -euo pipefail
+  let
+    cosmosBashRc = pkgs.writeText "cosmos-bashrc" ''
+      # Interactive niceties
+      shopt -s checkwinsize
+      shopt -s histappend
 
-          BWRAP="${lib.getExe pkgs.bubblewrap}"
-          BASH_BIN="${lib.getExe pkgs.bashInteractive}"
+      # Bash completion (program + path)
+      if [ -f ${pkgs.bash-completion}/etc/profile.d/bash_completion.sh ]; then
+        source ${pkgs.bash-completion}/etc/profile.d/bash_completion.sh
+      elif [ -f ${pkgs.bash-completion}/share/bash-completion/bash_completion ]; then
+        source ${pkgs.bash-completion}/share/bash-completion/bash_completion
+      fi
 
-          PROJECT_DIR="''${PROJECT_DIR:-$PWD}"
-          VM_HOME="''${VM_HOME:-$PROJECT_DIR/.wsl/home}"
-          BUILD_DIR="''${BUILD_DIR:-$PROJECT_DIR/.wsl/build}"
+      # Git prompt support (branch only)
+      if [ -f ${pkgs.git}/share/git/contrib/completion/git-prompt.sh ]; then
+        source ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
+        # Ensure we only show the branch name (no dirty/stash/upstream glyphs)
+        unset GIT_PS1_SHOWDIRTYSTATE GIT_PS1_SHOWSTASHSTATE GIT_PS1_SHOWUNTRACKEDFILES GIT_PS1_SHOWUPSTREAM
+      fi
 
-          mkdir -p "$VM_HOME" "$BUILD_DIR"
+      # Colors
+      c_reset='\[\e[0m\]'
+      c_icon='\[\e[1;34m\]'     # bold blue
+      c_userhost='\[\e[1;36m\]' # bold cyan
+      c_path='\[\e[0;33m\]'     # yellow
+      c_branch='\[\e[0;35m\]'   # magenta
 
-          COSMOS_PATH='${lib.makeBinPath [
-            pkgs.coreutils
-            pkgs.git
-            pkgs.opencode
-            pkgs.bashInteractive
-            pkgs.bubblewrap
-            pkgs.nix
-          ]}'
+      # Prompt builder
+      __cosmos_prompt() {
+        local host="$(hostname -s 2>/dev/null || hostname)"
+        local git=
+        if type -t __git_ps1 >/dev/null 2>&1; then
+          git="$(__git_ps1 '%s')"
+          [ -n "$git" ] && git="($git)"
+        fi
 
-          COSMOS_LIBS='${lib.makeLibraryPath (runtimeLibs pkgs)}'
+        # Render path as ~/<project>... while HOME=/workspace
+        local path_disp
+        if [[ -n "''${COSMOS_PROJECT_NAME:-}" && "''${PWD}" == /workspace* ]]; then
+          local rel="''${PWD#/workspace}"
+          path_disp="~/"''${COSMOS_PROJECT_NAME}''${rel}
+        else
+          path_disp="''${PWD}"
+        fi
 
-          extra=()
+        # Use $USER (env) instead of \u to avoid NSS lookup ("I have no name!")
+        PS1="''${c_icon}🔒 ''${c_userhost}$USER@''${host} ''${c_path}''${path_disp} ''${c_branch}''${git}''${c_reset}> "
+      }
+      PROMPT_COMMAND="__cosmos_prompt"
+    '';
+  in
+  pkgs.writeShellScriptBin name ''
+    set -euo pipefail
 
-          if [ -d /mnt/wslg ]; then
-            extra+=(--ro-bind /mnt/wslg /mnt/wslg)
-          fi
+    BWRAP="${lib.getExe pkgs.bubblewrap}"
+    BASH_BIN="${lib.getExe pkgs.bashInteractive}"
 
-          if [ -d /tmp/.X11-unix ]; then
-            extra+=(--bind /tmp/.X11-unix /tmp/.X11-unix)
-          fi
+    PROJECT_DIR="''${PROJECT_DIR:-$PWD}"
+    PROJECT_NAME="$(basename "$PROJECT_DIR")"
+    HOST_USER="$(id -un 2>/dev/null || echo dev)"
+    HOST_NAME="$(hostname -s 2>/dev/null || echo cosmos-wsl)"
 
-          if [ -n "''${XDG_RUNTIME_DIR:-}" ] &&
-             [ -d "''${XDG_RUNTIME_DIR}" ]; then
-            extra+=(--bind "$XDG_RUNTIME_DIR" "$XDG_RUNTIME_DIR")
-          fi
+    COSMOS_PATH='${lib.makeBinPath [
+      pkgs.coreutils
+      pkgs.git
+      pkgs.opencode
+      pkgs.bashInteractive
+      pkgs.bubblewrap
+      pkgs.nix
+      pkgs.inetutils
+      pkgs.util-linux
+    ]}'
 
-          # NixOS resolv.conf is usually a symlink into /etc/static or /run.
-          for p in \
-            /etc/resolv.conf \
-            /etc/hosts \
-            /etc/nsswitch.conf \
-            /etc/ssl \
-            /etc/static \
-            /etc/pki
-          do
-            if [ -e "$p" ]; then
-              extra+=(--ro-bind "$p" "$p")
-            fi
-          done
+    COSMOS_LIBS='${lib.makeLibraryPath (runtimeLibs pkgs)}'
 
-          echo "[sandbox] project(host)=$PROJECT_DIR -> /workspace" >&2
-          echo "[sandbox] home(host)=$VM_HOME -> /home/dev" >&2
-          echo "[sandbox] build(host)=$BUILD_DIR -> /build" >&2
-          echo "[sandbox] host /home is NOT bound" >&2
-          echo "[sandbox] OpenCode" >&2
+    extra=()
 
-          exec "$BWRAP" \
-            --unshare-pid \
-            --unshare-ipc \
-            --unshare-uts \
-            --unshare-user \
-            --hostname cosmos-wsl \
-            --die-with-parent \
-            --tmpfs / \
-            --proc /proc \
-            --dev /dev \
-            --tmpfs /tmp \
-            --tmpfs /run \
-            --ro-bind /nix /nix \
-            --ro-bind-try /sys /sys \
-            --dir /home \
-            --dir /home/dev \
-            --dir /workspace \
-            --dir /build \
-            --bind "$VM_HOME" /home/dev \
-            --bind "$PROJECT_DIR" /workspace \
-            --bind "$BUILD_DIR" /build \
-            "''${extra[@]}" \
-            --chdir /workspace \
-            --clearenv \
-            --setenv HOME /home/dev \
-            --setenv USER dev \
-            --setenv LOGNAME dev \
-            --setenv SHELL "$BASH_BIN" \
-            --setenv PATH "$COSMOS_PATH" \
-            --setenv LD_LIBRARY_PATH "$COSMOS_LIBS" \
-            --setenv DISPLAY "''${DISPLAY:-}" \
-            --setenv WAYLAND_DISPLAY "''${WAYLAND_DISPLAY:-}" \
-            --setenv XDG_RUNTIME_DIR "''${XDG_RUNTIME_DIR:-}" \
-            --setenv TERM "''${TERM:-xterm-256color}" \
-            --setenv LANG "''${LANG:-C.UTF-8}" \
-            --setenv NIX_SSL_CERT_FILE /etc/ssl/certs/ca-bundle.crt \
-            --setenv SSL_CERT_FILE /etc/ssl/certs/ca-bundle.crt \
-            --setenv OPENAI_API_KEY "''${OPENAI_API_KEY:-}" \
-            -- \
-            "$BASH_BIN" -lc '
-              mkdir -p "$HOME"
+    if [ -d /tmp/.X11-unix ]; then
+      extra+=(--bind /tmp/.X11-unix /tmp/.X11-unix)
+    fi
 
-              echo
-              echo "Cosmos sandbox"
-              echo "  project : /workspace  (current dir, RW)"
-              echo "  home    : /home/dev   (.wsl/home, not host \$HOME)"
-              echo "  build   : /build      (.wsl/build)"
-              echo "  agent   : OpenCode"
-              echo "  API     : OpenAI API key passed through"
-              echo "  exit    : leave sandbox"
-              echo
+    for p in \
+      /etc/resolv.conf \
+      /etc/hosts \
+      /etc/nsswitch.conf \
+      /etc/ssl \
+      /etc/static \
+      /etc/pki
+    do
+      if [ -e "$p" ]; then
+        extra+=(--ro-bind "$p" "$p")
+      fi
+    done
 
-              exec bash
-            '
-        '';
+    echo "[sandbox] project(host)=$PROJECT_DIR -> /workspace" >&2
+    echo "[sandbox] HOME -> /workspace (no separate persistent home/build)" >&2
+    echo "[sandbox] host /home is NOT bound" >&2
+    echo "[sandbox] WSLg NOT exposed (no /mnt/wslg)" >&2
+    echo "[sandbox] XDG_RUNTIME_DIR NOT exposed (ssh/gpg agents hidden)" >&2
+    echo "[sandbox] OpenCode" >&2
+
+    exec "$BWRAP" \
+      --unshare-pid \
+      --unshare-ipc \
+      --unshare-uts \
+      --unshare-user \
+      --hostname "$HOST_NAME" \
+      --die-with-parent \
+      --tmpfs / \
+      --proc /proc \
+      --dev /dev \
+      --tmpfs /tmp \
+      --tmpfs /run \
+      --ro-bind /nix /nix \
+      --ro-bind-try /sys /sys \
+      --dir /workspace \
+      --bind "$PROJECT_DIR" /workspace \
+      "''${extra[@]}" \
+      --chdir /workspace \
+      --clearenv \
+      --setenv HOME /workspace \
+      --setenv USER "$HOST_USER" \
+      --setenv LOGNAME "$HOST_USER" \
+      --setenv SHELL "$BASH_BIN" \
+      --setenv PATH "$COSMOS_PATH" \
+      --setenv LD_LIBRARY_PATH "$COSMOS_LIBS" \
+      --setenv DISPLAY "''${DISPLAY:-}" \
+      --setenv WAYLAND_DISPLAY "''${WAYLAND_DISPLAY:-}" \
+      --setenv SSH_AUTH_SOCK "" \
+      --setenv GPG_AGENT_INFO "" \
+      --setenv TERM "''${TERM:-xterm-256color}" \
+      --setenv LANG "''${LANG:-C.UTF-8}" \
+      --setenv LC_ALL "''${LANG:-C.UTF-8}" \
+      --setenv LOCALE_ARCHIVE ${pkgs.glibcLocales}/lib/locale/locale-archive \
+      --setenv FONTCONFIG_FILE ${pkgs.fontconfig.out}/etc/fonts/fonts.conf \
+      --setenv FONTCONFIG_PATH ${pkgs.fontconfig.out}/etc/fonts \
+      --setenv XDG_DATA_DIRS ${pkgs.fontconfig.out}/share:${pkgs.dejavu_fonts}/share:${pkgs.noto-fonts}/share:${pkgs.noto-fonts-color-emoji}/share:/usr/local/share:/usr/share \
+      --setenv NIX_SSL_CERT_FILE /etc/ssl/certs/ca-bundle.crt \
+      --setenv SSL_CERT_FILE /etc/ssl/certs/ca-bundle.crt \
+      --setenv OPENAI_API_KEY "''${OPENAI_API_KEY:-}" \
+      --setenv NIX_CONFIG "experimental-features = nix-command flakes" \
+      --setenv COSMOS_PROJECT_NAME "$PROJECT_NAME" \
+      -- \
+      "$BASH_BIN" -lc '
+        umask 077
+        mkdir -p "$HOME"
+
+        echo
+        echo "Cosmos sandbox"
+        echo "  project : /workspace  (current dir, RW)"
+        echo "  home    : /workspace  (same as project dir)"
+        echo "  agent   : OpenCode"
+        echo "  API     : OpenAI API key passed through"
+        echo "  WSLg    : not exposed"
+        echo "  XDG_RT  : not exposed (ssh/gpg agents hidden)"
+        echo "  exit    : leave sandbox"
+        echo
+          exec bash --rcfile '${cosmosBashRc}' -i
+        '
+  '';
+
+  
 
     in
       lib.recursiveUpdate

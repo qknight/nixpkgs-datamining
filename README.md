@@ -16,6 +16,8 @@ this study analyzed 2312 of 2569 rust projects (~90%)
 ## prerequisites
 
 - nixos or a compatible nix environment
+- `git clone https://github.com/NixOS/nixpkgs.git`
+- `cd nixpkgs; git checkout 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485`
 
 ## project structure
 
