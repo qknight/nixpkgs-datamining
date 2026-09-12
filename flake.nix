@@ -63,6 +63,7 @@
             pkgs.opencode
             pkgs.bashInteractive
             pkgs.bubblewrap
+            pkgs.nix
           ]}'
 
           COSMOS_LIBS='${lib.makeLibraryPath (runtimeLibs pkgs)}'
@@ -186,6 +187,7 @@
                 pkgs.opencode
                 pkgs.git
                 pkgs.bashInteractive
+                pkgs.nix
               ];
 
               shellHook = ''
@@ -229,6 +231,7 @@
                     opencode
                     bubblewrap
                     git
+                    nix
                   ];
                 })
               ];
