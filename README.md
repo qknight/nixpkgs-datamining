@@ -2,7 +2,6 @@
 
 this repository holds the scripts and data used to explores the impact of integrating nix into cargo, i.e. cargo+libnix.
 
-
 **this readme.md provides instructions to reproduce the study, based on nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485 from sat dec 13 13:17:29 2025**
 
 see https://lastlog.de/libnix_cargo-libnix_release.html for details.
@@ -165,6 +164,6 @@ additional implication:
 
 ## summary
 
-using cargo+libnix can significantly reduce build times via fine-grained caching: on average, only ~12% of crate dependencies need compilation. this also accelerates local development, where roughly ~20 of the ~158 average dependencies would build, with the rest substituted from cache.
+using cargo+libnix could significantly reduce build times via fine-grained caching: on average, only ~12% of crate dependencies need compilation. this also accelerates local development, where roughly ~20 of the ~158 average dependencies would build, with the rest substituted from cache.
 
 note: in nixpkgs `buildRustPackage` is always called with the same version of `cargo` and `rustc` which would be the minimal requirement to reuse crates between rust projects later using cargo+libnix.

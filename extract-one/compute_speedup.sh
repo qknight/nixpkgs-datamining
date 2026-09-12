@@ -19,8 +19,8 @@ from pathlib import Path
 
 inp = Path(\"$INPUT_FILE\")
 
-grand_total = 0
-record_count = 0
+total_builds_count = 0
+shared_builds_count = 0
 
 for raw in inp.read_text().splitlines():
     line = raw.strip()
@@ -28,14 +28,14 @@ for raw in inp.read_text().splitlines():
         continue
     parts = line.split()
     try:
-        grand_total += int(parts[0])
-        record_count += 1
+        total_builds_count += int(parts[0])
+        shared_builds_count += 1
     except (ValueError, IndexError):
         # Ignore lines that don't start with an integer
         continue
 
 print(
-    f\"Computed totals from {inp}: total_builds={grand_total}, shared_builds={record_count}, speedup={grand_total/record_count}\",
+    f\"Computed totals from {inp}: total_builds={total_builds_count}, shared_builds={shared_builds_count}, speedup={total_builds_count/shared_builds_count}\",
     file=sys.stderr
 )
 EOF"
