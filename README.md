@@ -19,6 +19,10 @@ this study analyzed 2312 of 2569 rust projects (~90%)
 - `git clone https://github.com/NixOS/nixpkgs.git`
 - `cd nixpkgs; git checkout 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485`
 
+optionally use `opencode` from the flake.nix, run:
+
+- `nix develop`
+
 ## project structure
 
 - filter-rust.nix: nix script to filter rust packages from nixpkgs
@@ -166,6 +170,6 @@ additional implication:
 
 ## summary
 
-using cargo+libnix could significantly reduce build times via fine-grained caching: on average, only ~12% of crate dependencies need compilation. this also accelerates local development, where roughly ~20 of the ~158 average dependencies would build, with the rest substituted from cache.
+using cargo+libnix could significantly reduce build times via fine-grained caching: on average only ~12% of crate dependencies would need to be compiled locally. the remaining 78% crates.io dependencies would be binary subsitudes. this would accelerate local development, where taken the ~158 average dependencies, roughly only ~20 would be built locally and the rest downloaded from cache.
 
 note: in nixpkgs `buildRustPackage` is always called with the same version of `cargo` and `rustc` which would be the minimal requirement to reuse crates between rust projects later using cargo+libnix.

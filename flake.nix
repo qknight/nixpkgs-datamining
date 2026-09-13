@@ -112,10 +112,6 @@
 
     extra=()
 
-    if [ -d /tmp/.X11-unix ]; then
-      extra+=(--bind /tmp/.X11-unix /tmp/.X11-unix)
-    fi
-
     for p in \
       /etc/resolv.conf \
       /etc/hosts \
@@ -195,8 +191,6 @@
           exec bash --rcfile '${cosmosBashRc}' -i
         '
   '';
-
-  
 
     in
       lib.recursiveUpdate
