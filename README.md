@@ -1,6 +1,6 @@
 # rust in nixpkgs ecosystem impact study
 
-this repository holds the scripts and data used to explores the impact of integrating nix into cargo, i.e. cargo+libnix.
+this repository holds the scripts and data used to explore the impact of integrating nix into cargo, i.e. cargo+libnix.
 
 **this readme.md provides instructions to reproduce the study, based on nixpkgs 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485 from sat dec 13 13:17:29 2025**
 
@@ -75,7 +75,7 @@ note: final aggregated stats are available in docs/combined.stats.
 
 ### generate non-unique statistics
 ```bash
-cat combined.stats | grep -v '^1 .*' | sort -k2,2 -k1,1nr > combined_non-unique.stats
+cat combined.stats | grep -v '^1 .*' | sort -k2,2 -k1,1nr > combined_shared-only.stats
 ```
 
 ## architectures
@@ -125,14 +125,14 @@ new_hash = hashlib.sha256(fingerprint).hexdigest()[:16]
 then these two files were created:
 
 * [combined.stats](https://qknight.github.io/nixpkgs-datamining/combined.stats)
-* [combined_non-unique.stats](https://qknight.github.io/nixpkgs-datamining/combined_non-unique.stats)
+* [combined_shared-only.stats](https://qknight.github.io/nixpkgs-datamining/combined_shared-only.stats)
 
-    the `combined_non-unique.stats` combines all the dependencies of 2312 analyzed rust projects but is filtered to contain only crates.io references which were used by more than one project (44248 shared dependencies)! 
+    the `combined_shared-only.stats` combines all the dependencies of 2312 analyzed rust projects but is filtered to contain only crates.io references which were used by more than one project (44248 shared dependencies)! 
 
     note: similar in npm, rust project nowadays often use more than one version of `bitflags` in one project.
 
-a visualization of `combined_non-unique.stats` using d3 is here, **warning: long load time ~40s**:
-* [d3 graph of combined_non-unique.stats](https://qknight.github.io/nixpkgs-datamining/index.html)
+a visualization of `combined_shared-only.stats` using d3 is here, **warning: long load time ~40s**:
+* [d3 graph of combined_shared-only.stats](https://qknight.github.io/nixpkgs-datamining/index.html)
 
 compute speedup:
 ```bash
@@ -166,5 +166,5 @@ using cargo+libnix could significantly reduce build times via fine-grained cachi
 ### caveats
 
 * in nixpkgs `buildRustPackage` is always called with the same version of `cargo` and `rustc` which would be the minimal requirement to reuse crates between rust projects later using cargo+libnix
-* the claimed ~8.1× speedup needs to be verified in practice
+* the claimed ~8.1× speedup, i.e. less crates need compilation, needs to be verified in practice because not all crates are equal
 * since cargo+libnix compiles each crate in a sandbox, compilation is slower with 0.5× panelty

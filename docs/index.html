@@ -238,15 +238,15 @@ function render(data) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  fetch('combined_non-unique.stats')
+  fetch('combined_shared-only.stats')
     .then(response => response.text())
     .then(text => {
       const data = parseData(text);
-      status.textContent = `Loaded combined_none-unique.stats (${data.length} bars)`;
+      status.textContent = `Loaded combined_shared-only.stats (${data.length} bars)`;
       render(data);
     })
     .catch(() => {
-      status.textContent = "Error loading combined_none-unique.stats";
+      status.textContent = "Error loading combined_shared-only.stats";
     });
 });
 
