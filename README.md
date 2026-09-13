@@ -84,12 +84,11 @@ evaluate supported systems (example output shown):
 ```bash
 nix eval --json --file ./architectures.nix
 
-    "x86_64-linux" - 2555
-    "aarch64-linux" - 2517
-    "x86_64-darwin" - 2008
-    "aarch64-darwin" - 2007
+"x86_64-linux" - 2555
+"aarch64-linux" - 2517
+"x86_64-darwin" - 2008
+"aarch64-darwin" - 2007
 ```
-
 
 ## `buildRustPackage` frequency of updates
 
