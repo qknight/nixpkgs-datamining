@@ -8,7 +8,7 @@ see https://lastlog.de/libnix_cargo-libnix_release.html for details.
 
 ## rust projects
 
-this study analyzed 2312 of 2569 rust projects (~90%)
+this study analyzed 2312 of 2569 rust projects (~90%), see the results.tar.xz contained. the remaining 10% did not produce a Cargo.lock|Cargo.toml|unit-graph which could be analyzed.
 
 * [rust packages included](https://github.com/qknight/nixpkgs-datamining/blob/master/extract-one/.download_success)
 * [rust packages excluded](https://github.com/qknight/nixpkgs-datamining/blob/master/extract-one/.download_failed)
@@ -19,7 +19,7 @@ this study analyzed 2312 of 2569 rust projects (~90%)
 - `git clone https://github.com/NixOS/nixpkgs.git`
 - `cd nixpkgs; git checkout 1c3d5a53f03f2eb5677f6f3b34f0ef31261ba485`
 
-optionally use `opencode` from the flake.nix, run:
+optionally i used [opencode](https://opencode.ai/) from the flake.nix for some queries, run:
 
 - `nix develop`
 
@@ -31,6 +31,8 @@ optionally use `opencode` from the flake.nix, run:
 - aggregate-stats.py: python script to aggregate statistics
 - results.tar.xz: pre-generated nix-build results (optional shortcut)
 - stats/: directory containing generated stats
+
+this project turnt from easy to complex and i'm sorry for the scripts all over the place.
 
 ## steps to reproduce
 
@@ -115,21 +117,21 @@ python scan-nixpkgs-for-buildRustPackage-changes.py
 * [Plotly graph of 2026 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages26.html)
 
 highlights (2025):
-- 62 releases, 3 reverts
+- 62 releases with 3 being reverted: 62-3 ≈ 59 releases
 - analyzed 2312 of 2569 rust projects (~90%)
 - average crates.io dependencies per project: 360909/2312 ≈ 158
 - assume remaining projects have a similar average
 - rust builds across architectures: 9087 = 2555 + 2517 + 2008 + 2007
 
-assuming each relevant nixpkgs change affects buildRustPackage:
+assuming each relevant nixpkgs change affects `buildRustPackage`:
 - crates.io compiles = rust projects × avg crates.io deps × releases
 - crates.io compiles = 9087 × 158 × 59 ≈ 84,709,014
 
-so during 2025, hydra.nixos.org compiled roughly ~85 million crates.io dependencies.
+so during 2025, hydra.nixos.org compiled roughly 85 million crates.io dependencies.
 
-## crate.io dependencies of the 2312 `buildRustPackage` rust projects
+## crates.io dependencies of the 2312 `buildRustPackage` rust projects
 
-using the script `unit-graph2stats.sh` we list all crate.io dependencies by name and hash where the hash consists of:
+using the script `unit-graph2stats.sh` we list all crates.io dependencies by name and hash where the hash consists of:
 
 ```python
 fingerprint = f\"{name}|{version}|{features}\".encode()
@@ -141,7 +143,7 @@ then these two files were created:
 * [combined.stats](https://qknight.github.io/nixpkgs-datamining/combined.stats)
 * [combined_non-unique.stats](https://qknight.github.io/nixpkgs-datamining/combined_non-unique.stats)
 
-    the `combined_non-unique.stats` combines all the dependencies of 2312 analyzed rust projects but is filtered to contain only crate.io references which were used by more than one project (44248 shared dependencies)! 
+    the `combined_non-unique.stats` combines all the dependencies of 2312 analyzed rust projects but is filtered to contain only crates.io references which were used by more than one project (44248 shared dependencies)! 
 
     note: similar in npm, rust project nowadays often use more than one version of `bitflags` in one project.
 
@@ -158,11 +160,11 @@ compute speedup:
 averages and facts:
 - average crates.io dependencies per project: 360909/2312 ≈ 158
 - successful stats for 2312 of 2569 packages (257 missing)
-- total crates.io builds estimated: ~360,909 targets (per project includes itself; we ignore -1)
-- with cargo+libnix, only ~44,248 targets would build, yielding ~8.1× speedup
+- total crates.io builds estimated
+- with cargo+libnix reduced to ~44,248 crates, likely ~8.1× less
 
 additional implication:
-- cargo+libnix can reuse intermediate crate builds (e.g., bitflags, syn, serde), so first time compiling a rust project like `atuin` would then often only need to build the 'actual' changes while substituting crates.io dependencies from cache.
+- cargo+libnix can reuse intermediate crate builds (e.g., bitflags, syn, serde), so when compiling for the first time a rust project like `atuin` would then often only need to build the 'actual' changes while substituting crates.io dependencies from cache.
 - on average one can expect that only about 1/8 of crates.io dependencies would have to be built locally due to uniqueness (versions/features), i.e., ~20 of 158:
 ```text
 158/8 ≈ 20
@@ -170,6 +172,15 @@ additional implication:
 
 ## summary
 
-using cargo+libnix could significantly reduce build times via fine-grained caching: on average only ~12% of crate dependencies would need to be compiled locally. the remaining 78% crates.io dependencies would be binary subsitudes. this would accelerate local development, where taken the ~158 average dependencies, roughly only ~20 would be built locally and the rest downloaded from cache.
+using cargo+libnix could significantly reduce build times via fine-grained caching: 
 
-note: in nixpkgs `buildRustPackage` is always called with the same version of `cargo` and `rustc` which would be the minimal requirement to reuse crates between rust projects later using cargo+libnix.
+* on average ~12% of crate dependencies would need to be compiled locally 
+* the remaining ~88% crates.io dependencies would be binary substitutes 
+
+**this would accelerate local development! for example, from the ~158 average dependencies, roughly only ~20 would be built locally and the rest ~138 are downloaded substitutes from cache.**
+
+### caveats
+
+* in nixpkgs `buildRustPackage` is always called with the same version of `cargo` and `rustc` which would be the minimal requirement to reuse crates between rust projects later using cargo+libnix
+* the claimed ~8.1× speedup needs to be verified in practice
+* since cargo+libnix compiles each crate in a sandbox, compilation is slower with 0.5× panelty

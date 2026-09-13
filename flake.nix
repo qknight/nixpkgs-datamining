@@ -22,16 +22,8 @@
       ];
 
       runtimeLibs = pkgs: with pkgs; [
-        libGL
-        vulkan-loader
-        wayland
-        libxkbcommon
         fontconfig
         freetype
-        libx11
-        libxcursor
-        libxrandr
-        libxi
       ];
 
       mkSandboxScript = pkgs: name:
@@ -106,6 +98,7 @@
       pkgs.nix
       pkgs.inetutils
       pkgs.util-linux
+      pkgs.which
     ]}'
 
     COSMOS_LIBS='${lib.makeLibraryPath (runtimeLibs pkgs)}'
