@@ -111,7 +111,7 @@ assuming each relevant nixpkgs change affects `buildRustPackage`:
 - crates.io compiles = rust projects × avg crates.io deps × releases
 - crates.io compiles = 9087 × 158 × 59 ≈ 84,709,014
 
-so during 2025, hydra.nixos.org compiled roughly 85 million crates.io dependencies.
+**so during 2025, hydra.nixos.org supposedly compiled roughly 85 million crates.io dependencies and on top, the 9087 rust projects using them.**
 
 ## crates.io dependencies of the 2312 `buildRustPackage` rust projects
 
