@@ -101,17 +101,17 @@ python scan-nixpkgs-for-buildRustPackage-changes.py
 * [Plotly graph of 2026 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages26.html)
 
 highlights (2025):
-- 62 releases with 3 being reverted: 62-3 ≈ 59 releases
+- 62 `buildRustPackage` releases with 3 reverts, so: 62-3 ≈ 59  `buildRustPackage` releases
 - analyzed 2312 of 2569 rust projects (~90%)
-- average crates.io dependencies per project: 360909/2312 ≈ 158
+- average crates.io dependencies per project: 360909/2312 ≈ 156
 - assume remaining projects have a similar average
 - rust builds across architectures: 9087 = 2555 + 2517 + 2008 + 2007
 
 assuming each relevant nixpkgs change affects `buildRustPackage`:
 - crates.io compiles = rust projects × avg crates.io deps × releases
-- crates.io compiles = 9087 × 158 × 59 ≈ 84,709,014
+- crates.io compiles = 9087 × 156 × 59 ≈ 83,636,748
 
-**so during 2025, hydra.nixos.org supposedly compiled roughly 85 million crates.io dependencies and on top, the 9087 rust projects using them.**
+**so during 2025, hydra.nixos.org supposedly compiled roughly 84 million crates.io dependencies and on top, the 9087 rust projects using them.**
 
 ## crates.io dependencies of the 2312 `buildRustPackage` rust projects
 
@@ -127,9 +127,9 @@ then these two files were created:
 * [combined.stats](https://qknight.github.io/nixpkgs-datamining/combined.stats)
 * [combined_shared-only.stats](https://qknight.github.io/nixpkgs-datamining/combined_shared-only.stats)
 
-    the `combined_shared-only.stats` combines all the dependencies of 2312 analyzed rust projects but is filtered to contain only crates.io references which were used by more than one project (44248 shared dependencies)! 
+    the `combined_shared-only.stats` contains all the dependencies of 2312 analyzed rust projects but is filtered to contain only crates.io references which were used by more than one project (44248 shared dependencies)! 
 
-    note: similar in npm, rust project nowadays often use more than one version of `bitflags` in one project.
+    note: similarly, Rust projects often use multiple versions of a crate such as bitflags
 
 a visualization of `combined_shared-only.stats` using d3 is here, **warning: long load time ~40s**:
 * [d3 graph of combined_shared-only.stats](https://qknight.github.io/nixpkgs-datamining/index.html)
@@ -137,34 +137,32 @@ a visualization of `combined_shared-only.stats` using d3 is here, **warning: lon
 compute speedup:
 ```bash
 ./compute_speedup.sh ../docs/combined.stats
-# output:
-# computed totals from ../docs/combined.stats: total_builds=360909, shared_builds=44248, speedup=8.156504248779607
+computed totals from ../docs/combined.stats: total_builds=360909, shared_builds=44248, speedup=8.156504248779607
 ```
 
 averages and facts:
-- average crates.io dependencies per project: 360909/2312 ≈ 158
+- average crates.io dependencies per project: 360909/2312 ≈ 156
 - successful stats for 2312 of 2569 packages (257 missing)
 - total crates.io builds estimated
-- with cargo+libnix reduced to ~44,248 crates, likely ~8.1× less
+- with cargo+libnix, instead of 360,909 we build only ~44,248 crates, likely ~8.1× fewer
 
 additional implication:
 - cargo+libnix can reuse intermediate crate builds (e.g., bitflags, syn, serde), so when compiling for the first time a rust project like `atuin` would then often only need to build the 'actual' changes while substituting crates.io dependencies from cache.
-- on average one can expect that only about 1/8 of crates.io dependencies would have to be built locally due to uniqueness (versions/features), i.e., ~20 of 158:
+- on average one can expect that only about 1/8 of crates.io dependencies would have to be built locally due to uniqueness (versions/features), i.e., ~20 of 156:
 ```text
-158/8 ≈ 20
+156/8 ≈ 20
 ```
-
 ## summary
 
-using cargo+libnix could significantly reduce build times via fine-grained caching: 
+using cargo+libnix could significantly reduce build times for crates.io dependencies via fine-grained build caching: 
 
-* on average ~12% of crate dependencies would need to be compiled locally 
+* on average only ~12% of crates.io dependencies would need to be built locally 
 * the remaining ~88% crates.io dependencies would be binary substitutes 
 
-**this would accelerate local development! for example, from the ~158 average dependencies, roughly only ~20 would be built locally and the rest ~138 are downloaded substitutes from cache.**
+note: `cargo` by default will create rlib(s) from crates.io libraries and builds them into one binary statically (no as dynamic shared objects like .dll or .so). cargo+libnix does not change this behaviour but shares the build artifacts between rust projects in a global scale.
 
 ### caveats
 
 * in nixpkgs `buildRustPackage` is always called with the same version of `cargo` and `rustc` which would be the minimal requirement to reuse crates between rust projects later using cargo+libnix
-* the claimed ~8.1× speedup, i.e. less crates need compilation, needs to be verified in practice because not all crates are equal
-* since cargo+libnix compiles each crate in a sandbox, compilation is slower with 0.5× panelty
+* the projected ~8.1× reduction, i.e. fewer crates need compilation, needs to be verified in practice because not all crates are equal and it requires that users are using the same cargo+rustc version as nixpkgs does.
+* note: cargo+libnix compiles each crate in a sandbox, compilation is somewhat slower (~0.5× to ~0.7×)
