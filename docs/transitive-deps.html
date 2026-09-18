@@ -2384,7 +2384,7 @@ const traces = [
   Plotly.newPlot('myDiv', traces, layout, config);
 
 
-  const statsDiv = document.getElementById('stats');
+const statsDiv = document.getElementById('stats');
 if (statsDiv) {
   // Use already-parsed 'deps' to compute aggregates
   const projectCount = deps.length;
@@ -2396,6 +2396,33 @@ if (statsDiv) {
 
   const avg = (sum) => (projectCount ? sum / projectCount : 0);
   const pct = (part) => (grandTotal ? (part / grandTotal) * 100 : 0);
+
+  // New: percentile helpers and stats for direct/internal
+  const quantile = (sorted, q) => {
+    if (!sorted.length) return 0;
+    const pos = (sorted.length - 1) * q;
+    const base = Math.floor(pos);
+    const rest = pos - base;
+    return sorted[base + 1] !== undefined
+      ? sorted[base] + rest * (sorted[base + 1] - sorted[base])
+      : sorted[base];
+  };
+
+  const calcStats = (arr) => {
+    const s = [...arr].sort((a, b) => a - b);
+    const n = s.length;
+    return {
+      min: n ? s[0] : 0,
+      max: n ? s[n - 1] : 0,
+      median: quantile(s, 0.5),
+      p25: quantile(s, 0.25),
+      p75: quantile(s, 0.75),
+      p90: quantile(s, 0.9)
+    };
+  };
+
+  const directStats = calcStats(deps.map(d => d.direct));
+  const internalStats = calcStats(deps.map(d => d.project));
 
   const html = projectCount
     ? `
@@ -2422,6 +2449,18 @@ if (statsDiv) {
           <li><strong>Direct Dependencies:</strong> ${pct(totalDirect).toFixed(1)}% of Total</li>
           <li><strong>Transitive Dependencies:</strong> ${pct(totalTransitive).toFixed(1)}% of Total</li>
           <li><strong>Combined Direct and Transitive Dependencies:</strong> ${pct(totalDirect + totalTransitive).toFixed(2)}% of Total</li>
+        </ul>
+
+        <h3>Direct Dependencies Distribution</h3>
+        <ul>
+          <li>median=${directStats.median}, p25=${directStats.p25}, p75=${directStats.p75}, p90=${directStats.p90}, min=${directStats.min}, max=${directStats.max}</li>
+          <li>p75 of the projects use <= ${directStats.p75.toFixed(1)} direct dependencies</li>
+        </ul>
+
+        <h3>Internal Crates Distribution</h3>
+        <ul>
+          <li>median=${internalStats.median}, p25=${internalStats.p25}, p75=${internalStats.p75}, p90=${internalStats.p90}, min=${internalStats.min}, max=${internalStats.max}</li>
+          <li>p75 of the projects use <= ${internalStats.p75.toFixed(1)} main crates</li>
         </ul>
       </section>
     `
