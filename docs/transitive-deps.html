@@ -2397,7 +2397,7 @@ if (statsDiv) {
   const avg = (sum) => (projectCount ? sum / projectCount : 0);
   const pct = (part) => (grandTotal ? (part / grandTotal) * 100 : 0);
 
-  // New: percentile helpers and stats for direct/internal
+  // Percentiles and distribution stats
   const quantile = (sorted, q) => {
     if (!sorted.length) return 0;
     const pos = (sorted.length - 1) * q;
@@ -2423,6 +2423,7 @@ if (statsDiv) {
 
   const directStats = calcStats(deps.map(d => d.direct));
   const internalStats = calcStats(deps.map(d => d.project));
+  const fmtd = (v) => `${v.toFixed(1)}`;
 
   const html = projectCount
     ? `
@@ -2453,14 +2454,32 @@ if (statsDiv) {
 
         <h3>Direct Dependencies Distribution</h3>
         <ul>
-          <li>median=${directStats.median}, p25=${directStats.p25}, p75=${directStats.p75}, p90=${directStats.p90}, min=${directStats.min}, max=${directStats.max}</li>
-          <li>p75 of the projects use <= ${directStats.p75.toFixed(1)} direct dependencies</li>
+          <li>
+            <abbr title="50th percentile; half the projects use fewer direct dependencies">median</abbr>=${fmtd(directStats.median)},
+            <abbr title="25th percentile; 25% of projects use fewer direct dependencies">p25</abbr>=${fmtd(directStats.p25)},
+            <abbr title="75th percentile; 25% of projects use more direct dependencies">p75</abbr>=${fmtd(directStats.p75)},
+            <abbr title="90th percentile; only 10% of projects use more direct dependencies">p90</abbr>=${fmtd(directStats.p90)},
+            <abbr title="Minimum number of direct dependencies across projects">min</abbr>=${directStats.min.toFixed(0)}d,
+            <abbr title="Maximum number of direct dependencies across projects">max</abbr>=${directStats.max.toFixed(0)}d
+          </li>
+          <li>
+            <abbr title="75th percentile">p75</abbr> of projects use <= ${directStats.p75.toFixed(1)} direct dependencies
+          </li>
         </ul>
 
         <h3>Internal Crates Distribution</h3>
         <ul>
-          <li>median=${internalStats.median}, p25=${internalStats.p25}, p75=${internalStats.p75}, p90=${internalStats.p90}, min=${internalStats.min}, max=${internalStats.max}</li>
-          <li>p75 of the projects use <= ${internalStats.p75.toFixed(1)} main crates</li>
+          <li>
+            <abbr title="50th percentile; half the projects have fewer internal crates">median</abbr>=${fmtd(internalStats.median)},
+            <abbr title="25th percentile; 25% of projects have fewer internal crates">p25</abbr>=${fmtd(internalStats.p25)},
+            <abbr title="75th percentile; 25% of projects have more internal crates">p75</abbr>=${fmtd(internalStats.p75)},
+            <abbr title="90th percentile; only 10% of projects have more internal crates">p90</abbr>=${fmtd(internalStats.p90)},
+            <abbr title="Minimum number of internal crates across projects">min</abbr>=${internalStats.min.toFixed(0)}d,
+            <abbr title="Maximum number of internal crates across projects">max</abbr>=${internalStats.max.toFixed(0)}d
+          </li>
+          <li>
+            <abbr title="75th percentile">p75</abbr> of projects use <= ${internalStats.p75.toFixed(1)} main crates
+          </li>
         </ul>
       </section>
     `
@@ -2468,6 +2487,5 @@ if (statsDiv) {
 
   statsDiv.innerHTML = html;
 }
-
 
 </script>
