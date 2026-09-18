@@ -157,9 +157,8 @@ additional implication:
 ## rust project direct and indirect dependencies of the 2312 `buildRustPackage` rust projects
 
 ```bash
-🔒 nixos@nixos ~/nixpkgs-datamining/extract-one (master)> python unit-graph2dep-counts.py ./results/result-atuin/unit-graph 
-python unit-graph2dep-counts.py ./results/result-atuin/unit-graph
-atuin 18.10.0 46 393
+python unit-graph2dep-counts.py atuin ./results/result-atuin/unit-graph
+atuin 18.10.0 12 34 393
 
 head -n 2600 .download_success | xargs -n 1 -I {} python unit-graph2dep-counts.py {} results/result-{}/unit-graph > transitive-deps.stats
 ```
@@ -167,8 +166,6 @@ head -n 2600 .download_success | xargs -n 1 -I {} python unit-graph2dep-counts.p
 finally copy the contents of ./transitive-deps.stats to docs/transitive-deps.html and open it in a webpage
 
 * [plotly graph and statistics ](https://qknight.github.io/nixpkgs-datamining/transitive-deps.html)
-
-
 
 ## summary
 
