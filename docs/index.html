@@ -20,6 +20,14 @@
     padding: 6px 10px; border-radius: 4px; font-size: 13px;
     opacity: 0; transition: opacity 0.15s; z-index: 20;
   }
+  .stack rect {
+    transition: fill 120ms ease, filter 120ms ease, stroke 120ms ease;
+  }
+  .stack rect:hover {
+    filter: brightness(1.3) saturate(1.15);
+    stroke: #fff;
+    stroke-width: 1px;
+  }
 </style>
 </head>
 <body>
