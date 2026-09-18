@@ -114,6 +114,42 @@ assuming each relevant nixpkgs change affects `buildRustPackage`:
 
 **so during 2025, hydra.nixos.org supposedly compiled roughly 84 million crates.io dependencies and on top, the 9087 rust projects using them.**
 
+## rust project direct and indirect dependencies of the 2312 `buildRustPackage` rust projects
+
+```bash
+python unit-graph2dep-counts.py atuin ./results/result-atuin/unit-graph
+atuin 18.10.0 12 34 393
+
+head -n 2600 .download_success | xargs -n 1 -I {} python unit-graph2dep-counts.py {} results/result-{}/unit-graph > transitive-deps.stats
+```
+
+finally copy the contents of ./transitive-deps.stats to docs/transitive-deps.html and open it in a webpage
+
+* [plotly graph and statistics ](https://qknight.github.io/nixpkgs-datamining/transitive-deps.html)
+
+```
+Project Analysis
+Total Projects Analyzed: 2300
+
+Average Internal Crates per Project: 3.8
+Average Direct Dependencies per Project: 15.7
+Average Transitive Dependencies per Project: 138.8
+
+Overall Dependency Count
+
+Total Internal Crates: 8759
+Total Direct Dependencies: 36080
+Total Transitive Dependencies: 319137
+
+Total & Percentage Breakdown
+
+Total Crates Count: 363976
+Internal Crates: 2.4% of Total
+Direct Dependencies: 9.9% of Total
+Transitive Dependencies: 87.7% of Total
+Combined Direct and Transitive Dependencies: 97.59% of Total
+```
+
 ## crates.io dependencies of the 2312 `buildRustPackage` rust projects
 
 using the script `unit-graph2stats.sh` we list all crates.io dependencies by name and hash where the hash consists of:
@@ -153,19 +189,6 @@ additional implication:
 ```text
 156/8 ≈ 20
 ```
-
-## rust project direct and indirect dependencies of the 2312 `buildRustPackage` rust projects
-
-```bash
-python unit-graph2dep-counts.py atuin ./results/result-atuin/unit-graph
-atuin 18.10.0 12 34 393
-
-head -n 2600 .download_success | xargs -n 1 -I {} python unit-graph2dep-counts.py {} results/result-{}/unit-graph > transitive-deps.stats
-```
-
-finally copy the contents of ./transitive-deps.stats to docs/transitive-deps.html and open it in a webpage
-
-* [plotly graph and statistics ](https://qknight.github.io/nixpkgs-datamining/transitive-deps.html)
 
 ## summary
 
