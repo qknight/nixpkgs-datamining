@@ -6,6 +6,7 @@ this repository holds the scripts and data used to explore the impact of integra
 
 see https://lastlog.de/libnix_cargo-libnix_release.html for details.
 
+
 ## rust projects
 
 this study analyzed 2312 of 2569 rust projects (~90%), see the results.tar.xz contained. the remaining 10% did not produce a Cargo.lock|Cargo.toml|unit-graph which could be analyzed.
@@ -152,6 +153,23 @@ additional implication:
 ```text
 156/8 ≈ 20
 ```
+
+## rust project direct and indirect dependencies of the 2312 `buildRustPackage` rust projects
+
+```bash
+🔒 nixos@nixos ~/nixpkgs-datamining/extract-one (master)> python unit-graph2dep-counts.py ./results/result-atuin/unit-graph 
+python unit-graph2dep-counts.py ./results/result-atuin/unit-graph
+atuin 18.10.0 46 393
+
+head -n 2600 .download_success | xargs -n 1 -I {} python unit-graph2dep-counts.py {} results/result-{}/unit-graph > transitive-deps.stats
+```
+
+finally copy the contents of ./transitive-deps.stats to docs/transitive-deps.html and open it in a webpage
+
+* [plotly graph and statistics ](https://qknight.github.io/nixpkgs-datamining/transitive-deps.html)
+
+
+
 ## summary
 
 using cargo+libnix could significantly reduce build times for crates.io dependencies via fine-grained build caching: 
@@ -160,6 +178,8 @@ using cargo+libnix could significantly reduce build times for crates.io dependen
 * the remaining ~88% crates.io dependencies would be binary substitutes 
 
 note: `cargo` by default will create rlib(s) from crates.io libraries and builds them into one binary statically (no as dynamic shared objects like .dll or .so). cargo+libnix does not change this behaviour but shares the build artifacts between rust projects in a global scale.
+
+there are other interesting resources as [lib.rs](https://lib.rs/stats)
 
 ### caveats
 

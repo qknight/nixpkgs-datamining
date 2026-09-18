@@ -99,6 +99,8 @@
       pkgs.inetutils
       pkgs.util-linux
       pkgs.which
+      pkgs.python3
+      pkgs.findutils
     ]}'
 
     COSMOS_LIBS='${lib.makeLibraryPath (runtimeLibs pkgs)}'
@@ -214,6 +216,8 @@
                 pkgs.git
                 pkgs.bashInteractive
                 pkgs.nix
+                pkgs.python3
+                pkgs.findutils
               ];
 
               shellHook = ''
@@ -258,6 +262,8 @@
                     bubblewrap
                     git
                     nix
+                    pkgs.python3
+                    pkgs.findutils
                   ];
                 })
               ];
