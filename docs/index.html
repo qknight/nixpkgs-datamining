@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <title>Stacked Bar – identical rlibs</title>
 <script src="d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xz@0.1.0/dist/xz.min.js"></script>
+
 <style>
   body { font-family: system-ui, sans-serif; margin: 0; background: #111; color: #eee; }
   #controls {
@@ -34,7 +36,7 @@
 
 <div id="controls">
   <div>Load data file (count name hash):</div>
-  <input type="file" id="fileInput" accept=".txt,.csv,.dat,text/*">
+  <input type="file" id="fileInput" accept=".txt,.csv,.dat,.xz,text/*">
   <div class="info" id="status">No file loaded</div>
 </div>
 
@@ -50,6 +52,52 @@ const tooltip = d3.select("#tooltip");
 const status  = document.getElementById("status");
 
 const rgbSpectrum = t => d3.hsl(t * 360, 0.65, 0.55).formatHex();
+
+async function decompressXzToText(buffer) {
+  if (!window.XZ || typeof XZ.decompress !== "function") {
+    throw new Error("XZ decompressor library not loaded");
+  }
+  const out = XZ.decompress(new Uint8Array(buffer)); // Uint8Array
+  return new TextDecoder("utf-8").decode(out);
+}
+
+
+document.getElementById("fileInput").addEventListener("change", function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  // ... existing code ...
+
+  if (file.name.endsWith(".xz")) {
+    status.textContent = "Reading " + file.name + " …";
+    const reader = new FileReader();
+    reader.onload = async ev => {
+      try {
+        status.textContent = "Decompressing " + file.name + " …";
+        const text = await decompressXzToText(ev.target.result);
+        const data = parseData(text);
+        status.textContent = `Loaded ${file.name} (${data.length} bars)`;
+        render(data);
+      } catch (err) {
+        console.error(err);
+        status.textContent = "Error decompressing file";
+      }
+    };
+    reader.onerror = () => status.textContent = "Error reading file";
+    reader.readAsArrayBuffer(file);
+  } else {
+    // Fallback for plain text files
+    status.textContent = "Reading " + file.name + " …";
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const data = parseData(ev.target.result);
+      status.textContent = `Loaded ${file.name} (${data.length} bars)`;
+      render(data);
+    };
+    reader.onerror = () => status.textContent = "Error reading file";
+    reader.readAsText(file);
+  }
+});
 
 document.getElementById("fileInput").addEventListener("change", function(e) {
   const file = e.target.files[0];
@@ -246,15 +294,21 @@ function render(data) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  fetch('combined_shared-only.stats')
-    .then(response => response.text())
+  // Fetch compressed default dataset and decompress it
+  fetch('combined_shared-only.stats.xz')
+    .then(response => {
+      if (!response.ok) throw new Error("Network error");
+      return response.arrayBuffer();
+    })
+    .then(buf => decompressXzToText(buf))
     .then(text => {
       const data = parseData(text);
-      status.textContent = `Loaded combined_shared-only.stats (${data.length} bars)`;
+      status.textContent = `Loaded combined_shared-only.stats.xz (${data.length} bars)`;
       render(data);
     })
-    .catch(() => {
-      status.textContent = "Error loading combined_shared-only.stats";
+    .catch((err) => {
+      console.error(err);
+      status.textContent = "Error loading combined_shared-only.stats.xz";
     });
 });
 
