@@ -6,7 +6,6 @@ this repository holds the scripts and data used to explore the impact of integra
 
 see https://lastlog.de/libnix_cargo-libnix_release.html for details.
 
-
 ## rust projects
 
 this study analyzed 2312 of 2569 rust projects (~90%), see the results.tar.xz contained. the remaining 10% did not produce a Cargo.lock|Cargo.toml|unit-graph which could be analyzed.
@@ -112,7 +111,13 @@ assuming each relevant nixpkgs change affects `buildRustPackage`:
 - crates.io compiles = rust projects × avg crates.io deps × releases
 - crates.io compiles = 9087 × 156 × 59 ≈ 83,636,748
 
-**so during 2025, hydra.nixos.org supposedly compiled roughly 84 million crates.io dependencies and on top, the 9087 rust projects using them.**
+**during 2025, hydra.nixos.org supposedly compiled roughly 84 million crates.io dependencies and on top, the 9087 rust projects using them.**
+
+for internal crates (we use the 2312 `buildRustPackage` results to estimate):
+- architectures × internal crates from x86_64 × releases = internal crate compiles
+- 4 × 8759 × 59 ≈ 2,067,124
+
+**during 2025, hydra.nixos.org supposedly compiled roughly 2 million internal crates**
 
 ## rust project direct and indirect dependencies of the 2312 `buildRustPackage` rust projects
 
