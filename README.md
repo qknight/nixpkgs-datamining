@@ -25,12 +25,27 @@ optionally i used [opencode](https://opencode.ai/) from the flake.nix for some q
 
 ## project structure
 
-- filter-rust.nix: nix script to filter rust packages from nixpkgs
-- download-src.nix: nix script to extract cargo lock files
-- unit-graph2stats.sh: shell script to convert dependency data into stats
-- aggregate-stats.py: python script to aggregate statistics
-- results.tar.xz: pre-generated nix-build results (optional shortcut)
-- stats/: directory containing generated stats
+- `filter-rust.nix`: evaluates nixpkgs and selects derivations with Cargo vendoring or lock-file attributes
+- `rust-eval.jsonl`: saved output from the nixpkgs evaluation
+- `rust-packages.txt`: package attribute names selected from `rust-eval.jsonl`
+- `architectures.nix`: counts the selected packages supported by each target architecture
+- `extract-one/`: source extraction and dependency-analysis tools and data
+  - `download-src.nix`: overrides one package build to save its `Cargo.toml`, `Cargo.lock`, and Cargo unit graph
+  - `download-src.sh`: builds one package extraction
+  - `.download_success` and `.download_failed`: package attributes grouped by extraction outcome
+  - `unit-graph2stats.sh`: converts a Cargo unit graph into crate fingerprints for aggregation
+  - `aggregate-stats.py`: combines per-package crate fingerprints into occurrence counts
+  - `unit-graph2dep-counts.py`: counts internal, direct, and transitive dependencies in a unit graph
+  - `unit-graph2dep-counts.stats`: saved dependency-count output for the analyzed packages
+  - `compute_speedup.sh`: calculates total and unique crate builds from aggregated statistics
+  - `results.tar.xz`: archived pre-generated extraction results; unpacking it avoids rebuilding every package
+  - `stats/`: checked-in per-package crate fingerprint files
+  - `results/` and `stats_with_deps/`: generated extraction and intermediate statistics directories
+- `scan-nixpkgs-for-buildRustPackage-changes.py`: scans nixpkgs history for changes to the `buildRustPackage` probe derivation
+- `rustPlatform.buildRustPackage-probe.nix`: minimal derivation used by the history scan
+- `rustPlatform.buildRustPackage-probe-results-*.txt`: saved yearly probe results
+- `docs/`: aggregated datasets, generated Plotly/D3 visualizations, and vendored browser libraries
+- `flake.nix` and `flake.lock`: optional Nix development environment used to run OpenCode
 
 this project turnt from easy to complex and i'm sorry for the scripts all over the place.
 
