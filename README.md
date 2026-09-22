@@ -177,7 +177,13 @@ head -n 2600 .download_success | xargs -n 1 -I {} python unit-graph2dep-counts.p
 
 finally copy the contents of ./crate-type-distribution.stats to docs/crate-type-distribution.html and open it in a webpage
 
-## crates.io dependencies of the 2312 `buildRustPackage` rust projects
+## finding identical crates.io dependencies in 2312 `buildRustPackage` rust projects
+
+a graph showing similar crates.io dependencie configurations in 2312 `buildRustPackage` rust projects.
+
+**warning: long load time ~40s**:
+
+* [📊 d3 graph of combined_shared-only.stats](https://qknight.github.io/nixpkgs-datamining/index.html)
 
 using the script `unit-graph2stats.sh` we list all crates.io dependencies by name and hash where the hash consists of:
 
@@ -194,9 +200,6 @@ then these two files were created:
     the `combined_shared-only.stats` contains all the dependencies of 2312 analyzed rust projects but is filtered to contain only crates.io references which were used by more than one project (44248 shared dependencies)! 
 
     note: similarly, Rust projects often use multiple versions of a crate such as bitflags
-
-a visualization of `combined_shared-only.stats` using d3 is here, **warning: long load time ~40s**:
-* [📊 d3 graph of combined_shared-only.stats](https://qknight.github.io/nixpkgs-datamining/index.html)
 
 compute speedup:
 ```bash
