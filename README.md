@@ -226,3 +226,17 @@ there are other interesting resources as [lib.rs](https://lib.rs/stats)
 * in nixpkgs `buildRustPackage` is always called with the same version of `cargo` and `rustc` which would be the minimal requirement to reuse crates between rust projects later using cargo+libnix
 * the projected ~8.1× reduction, i.e. fewer crates need compilation, needs to be verified in practice because not all crates are equal and it requires that users are using the same cargo+rustc version as nixpkgs does.
 * note: cargo+libnix compiles each crate in a sandbox, compilation is somewhat slower (~0.5× to ~0.7×)
+
+## license
+
+this project is provided as public domain work. All scripts, data, and additional content authored as part of this project are released under the [Creative Commons Zero v1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) license, allowing for unrestricted copying, modification, and sharing.
+
+### dependencies
+
+- this project includes `d3.v7.min.js` and `plotly-4.0.0.min.js`, each of which may be subject to their own respective licenses:
+  - **d3.js** by Mike Bostock is licensed under the [BSD-2-Clause license](https://github.com/d3/d3/blob/main/LICENSE).
+  - **plotly.js** is licensed under the [MIT License](https://github.com/plotly/plotly.js/blob/main/LICENSE).
+
+### note
+
+a significant portion of this was generated with the assistance of AI models, including GPT 5 and GPT 5.6 Sol.
