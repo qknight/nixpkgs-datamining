@@ -136,16 +136,13 @@ for internal crates (we use the 2312 `buildRustPackage` results to estimate):
 
 ## **direct and indirect dependencies of the 2312 `buildRustPackage` rust projects**
 
-```bash
-python unit-graph2dep-counts.py atuin ./results/result-atuin/unit-graph
-atuin 18.10.0 12 34 393
+a rust project consists of two types of crates:
+* project crates, i.e. your code
+* libraries you use, i.e. dependencies like direct dependencies and transitive dependencies
 
-head -n 2600 .download_success | xargs -n 1 -I {} python unit-graph2dep-counts.py {} results/result-{}/unit-graph > transitive-deps.stats
-```
+this graph shows the amount of crates per project:
 
-finally copy the contents of ./transitive-deps.stats to docs/transitive-deps.html and open it in a webpage
-
-* [📊 plotly graph of direct and indirect dependencies](https://qknight.github.io/nixpkgs-datamining/transitive-deps.html)
+* [📊 plotly graph showing crate type distribution](https://qknight.github.io/nixpkgs-datamining/crate-type-distribution.html)
 
 ```
 Project Analysis
@@ -169,6 +166,16 @@ Direct Dependencies: 9.9% of Total
 Transitive Dependencies: 87.7% of Total
 Combined Direct and Transitive Dependencies: 97.59% of Total
 ```
+
+
+```bash
+python unit-graph2dep-counts.py atuin ./results/result-atuin/unit-graph
+atuin 18.10.0 12 34 393
+
+head -n 2600 .download_success | xargs -n 1 -I {} python unit-graph2dep-counts.py {} results/result-{}/unit-graph > crate-type-distribution.stats
+```
+
+finally copy the contents of ./crate-type-distribution.stats to docs/crate-type-distribution.html and open it in a webpage
 
 ## crates.io dependencies of the 2312 `buildRustPackage` rust projects
 
