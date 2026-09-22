@@ -112,8 +112,8 @@ we count changes that force re-evaluation/rebuilds, including stdenv, rustc/carg
 python scan-nixpkgs-for-buildRustPackage-changes.py
 ```
 
-* [plotly graph of 2025 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages25.html) 
-* [Plotly graph of 2026 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages26.html)
+* [📊 plotly graph of 2025 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages25.html) 
+* [📊 Plotly graph of 2026 for buildRustPackage](https://qknight.github.io/nixpkgs-datamining/buildRustPackages26.html)
 
 highlights (2025):
 - 62 `buildRustPackage` releases with 3 reverts, so: 62-3 ≈ 59  `buildRustPackage` releases
@@ -134,7 +134,7 @@ for internal crates (we use the 2312 `buildRustPackage` results to estimate):
 
 **during 2025, hydra.nixos.org supposedly compiled roughly 2 million internal crates**
 
-## rust project direct and indirect dependencies of the 2312 `buildRustPackage` rust projects
+## **direct and indirect dependencies of the 2312 `buildRustPackage` rust projects**
 
 ```bash
 python unit-graph2dep-counts.py atuin ./results/result-atuin/unit-graph
@@ -145,7 +145,7 @@ head -n 2600 .download_success | xargs -n 1 -I {} python unit-graph2dep-counts.p
 
 finally copy the contents of ./transitive-deps.stats to docs/transitive-deps.html and open it in a webpage
 
-* [plotly graph and statistics ](https://qknight.github.io/nixpkgs-datamining/transitive-deps.html)
+* [📊 plotly graph of direct and indirect dependencies](https://qknight.github.io/nixpkgs-datamining/transitive-deps.html)
 
 ```
 Project Analysis
@@ -189,7 +189,7 @@ then these two files were created:
     note: similarly, Rust projects often use multiple versions of a crate such as bitflags
 
 a visualization of `combined_shared-only.stats` using d3 is here, **warning: long load time ~40s**:
-* [d3 graph of combined_shared-only.stats](https://qknight.github.io/nixpkgs-datamining/index.html)
+* [📊 d3 graph of combined_shared-only.stats](https://qknight.github.io/nixpkgs-datamining/index.html)
 
 compute speedup:
 ```bash
